@@ -5,7 +5,6 @@ const FP = (window.FP = window.FP || {});
   كل شيء CSS ثلاثي الأبعاد خفيف (بدون WebGL). التقدّم p (0..1) دالة حتمية، فيعمل للأمام والخلف.
   الوجه الأمامي لكل لوح (كرتون خام) هو ما يُرى وهو مسطح؛ الوجه الخلفي (المطبوع) يصبح الوجه الخارجي للعلبة عند الطيّ.
 */
-const LN = Math.hypot(-.45, -.65, .62), LX = -.45 / LN, LY = -.65 / LN, LZ = .62 / LN;
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v)), seg = (p, a, b) => clamp((p - a) / (b - a), 0, 1), ss = (t) => t * t * (3 - 2 * t), lerp = (a, b, t) => a + (b - a) * t;
 
 function createFold(host, opts = {}) {
@@ -25,16 +24,6 @@ function createFold(host, opts = {}) {
   const wrap = (html) => `<div class="pr-in">${html}</div>`;
   front.b.innerHTML = wrap('<img src="assets/img/logo-light.svg" alt="" class="pr-logo">'); lid.b.innerHTML = wrap('<img src="assets/img/logo-mark.svg" alt="" class="pr-mark">'); left.b.innerHTML = right.b.innerHTML = wrap('<img src="assets/img/logo-mark.svg" alt="" class="pr-mark s">');
   back.b.innerHTML = wrap('<span class="pr-stripe"></span>'); bottom.b.innerHTML = wrap('<img src="assets/img/logo-mark.svg" alt="" class="pr-mark s">');
-  // علامات المناولة المطبوعة على الجدران (واقعية العلبة)
-  const ICO_UP = '<svg viewBox="0 0 40 52" class="pr-ic"><path d="M10 46V14M10 14l-6 8M10 14l6 8M28 46V14M28 14l-6 8M28 14l6 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  const ICO_REC = '<svg viewBox="0 0 40 40" class="pr-ic"><path d="M20 5a15 15 0 1 1-13 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M4 4l3 9 9-3" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></svg>';
-  front.b.innerHTML = wrap('<img src="assets/img/logo-light.svg" alt="" class="pr-logo"><span class="pr-tag">OLUKLU MUKAVVA AMBALAJ · GAZİANTEP</span>');
-  left.b.innerHTML = wrap('<div class="pr-ico">' + ICO_UP + '<img src="assets/img/logo-mark.svg" alt="" class="pr-mark s">' + '</div>');
-  right.b.innerHTML = wrap('<div class="pr-ico">' + ICO_REC + '<span class="pr-tag s">KRAFT · E-B-C</span>' + '</div>');
-  const ALL = [bottom, front, back, left, right, lid, tuck];
-  ALL.forEach((q) => { q.f.insertAdjacentHTML('beforeend', '<i class="sh"></i><i class="ao"></i><i class="hl"></i>'); q.b.insertAdjacentHTML('beforeend', '<i class="sh"></i><i class="hl"></i>'); });
-  // سماكة الكرتون على الحواف الحرّة (مقطع مضلّع)
-  [[front, 'e-bot'], [back, 'e-top'], [left, 'e-left'], [right, 'e-right'], [lid, 'e-top'], [tuck, 'e-top']].forEach(([q, c]) => q.p.insertAdjacentHTML('beforeend', `<i class="edge ${c}"></i>`));
 
   // التسلسل الهرمي للمفاصل (المركز = منتصف القاعدة)
   bottom.p.style.left = (-W / 2) + 'px'; bottom.p.style.top = (-D / 2) + 'px'; net.appendChild(bottom.p);
@@ -92,27 +81,11 @@ function createFold(host, opts = {}) {
     right.p.style.transform = `rotateY(${-90 * wallsB}deg)`;
     lid.p.style.transform = `rotateX(${-90 * lidK}deg)`;
     tuck.p.style.transform = `rotateX(${-100 * tuckK}deg)`;
-    const tilt = lerp(0, 58, ss(seg(p, .05, .5))), spinBase = lerp(0, -38, ss(seg(p, .05, .55))), spin = spinBase + (p > .86 ? (time * 9) % 360 * 0 : 0) + Math.sin(time * .5) * (p > .8 ? 7 : 0) + (p > .8 ? ss(seg(p, .8, 1)) * 12 : 0);
+    const tilt = lerp(0, 58, ss(seg(p, .05, .5))), spinBase = lerp(0, -38, ss(seg(p, .05, .55))), spin = spinBase + (p > .86 ? (time * 9) % 360 * 0 : 0) + Math.sin(time * .5) * (p > .8 ? 7 : 0) + (p > .8 ? ss(seg(p, .8, 1)) * 40 : 0);
     const zoomK = lerp(1, 1.5, ss(seg(p, .25, .85))), ty = lerp(105 * lastScale, -4 * lastScale, ss(seg(p, .04, .55)));
     net.style.transform = `translate3d(0, ${ty}px, 0) scale(${lastScale * zoomK}) rotateX(${tilt}deg) rotateZ(${spin}deg)`;
     net.style.setProperty('--out', (1 - ss(seg(p, .1, .3))).toFixed(3));
     net.style.setProperty('--hinge', flatK.toFixed(3));
-    // إضاءة لامبرت تقريبية لكل وجه + إظهار لمعان الورنيش (فقط في الوضع الكامل)
-    if (document.documentElement.dataset.perf === 'full') {
-    const R = Math.PI / 180, sp = Math.sin, cs = Math.cos, wa = 90 * wallsA * R, wb = 90 * wallsB * R, la = wa + 90 * lidK * R, ta = la + 100 * tuckK * R;
-    const nrm = { bottom: [0, 0, 1], front: [0, -sp(wa), cs(wa)], back: [0, sp(wa), cs(wa)], left: [sp(wb), 0, cs(wb)], right: [-sp(wb), 0, cs(wb)], lid: [0, sp(la), cs(la)], tuck: [0, sp(ta), cs(ta)] };
-    const tl = tilt * R, sn = spin * R, csn = cs(sn), ssn = sp(sn), ctl = cs(tl), stl = sp(tl);
-    const light = (n) => { const x = n[0] * csn - n[1] * ssn, y = n[0] * ssn + n[1] * csn, z = n[2], y2 = y * ctl - z * stl, z2 = y * stl + z * ctl; return Math.max(0, x * LX + y2 * LY + z2 * LZ); };
-    const hp = ((spin * 1.7 + time * 9) % 150 + 150) % 150 - 25;
-    const names = ['bottom', 'front', 'back', 'left', 'right', 'lid', 'tuck'];
-    names.forEach((nm, i) => {
-      const n = nrm[nm], si = light(n), so = light([-n[0], -n[1], -n[2]]), q = ALL[i].p.style;
-      q.setProperty('--df', ((1 - (.30 + .70 * si)) * .78).toFixed(3)); q.setProperty('--hf', (Math.pow(si, 5) * .1).toFixed(3));
-      q.setProperty('--db', ((1 - (.42 + .58 * so)) * .5).toFixed(3)); q.setProperty('--hb', (Math.pow(so, 3.2) * .5).toFixed(3));
-      q.setProperty('--hp', hp.toFixed(1) + '%');
-    });
-    net.style.setProperty('--ao', (1 - flatK).toFixed(3));
-    }
     host.dataset.p = p.toFixed(3);
   }
   return {

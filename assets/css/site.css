@@ -329,7 +329,7 @@ html:not([data-perf="full"]) .ct-bar { background: rgba(11, 11, 12, .98); }
 html:not([data-perf="full"]) .cur { mix-blend-mode: normal; }
 html:not([data-perf="full"]) .cur-dot, html:not([data-perf="full"]) .cur-rot b { background: var(--red); }
 html:not([data-perf="full"]) .cur-rot::before { border-color: var(--red); }
-html:not([data-perf="full"]) .hero-bg::after, html:not([data-perf="full"]) .fp .sh, html:not([data-perf="full"]) .fp .hl, html:not([data-perf="full"]) .fp .ao { display: none; }
+html:not([data-perf="full"]) .hero-bg::after { display: none; }
 html:not([data-perf="full"]) *, html:not([data-perf="full"]) *::before, html:not([data-perf="full"]) *::after { animation-iteration-count: 1 !important; }
 html:not([data-perf="full"]) .flw { animation-iteration-count: infinite !important; }
 html:not([data-perf="full"]) .art--hero { animation: none; }

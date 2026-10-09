@@ -20,7 +20,7 @@
 .ch-k { font: 500 .66rem var(--fm); letter-spacing: .2em; color: var(--red); text-transform: uppercase; } .ch h2 { font: 400 clamp(1.5rem, 2.2vw, 2rem)/1.1 var(--fd); margin: 8px 0 6px; } .ch p { color: var(--mut); font-size: .95rem; max-width: 30em; }
 .hero-stage { position: relative; align-self: stretch; min-height: 320px; }
 #fold-host { position: absolute; inset: 0; }
-.floor { position: absolute; left: 50%; bottom: 17%; width: 62%; height: 80px; translate: -50% 0; background: radial-gradient(closest-side, rgba(0, 0, 0, .85), transparent 70%) 50% 55% / 56% 55% no-repeat, radial-gradient(closest-side, rgba(0, 0, 0, .55), transparent) 50% 50% / 100% 100% no-repeat; filter: blur(9px); opacity: 0; pointer-events: none; }
+.floor { position: absolute; left: 50%; bottom: 17%; width: 62%; height: 70px; translate: -50% 0; background: radial-gradient(closest-side, rgba(0, 0, 0, .7), transparent); filter: blur(12px); opacity: 0; pointer-events: none; }
 .hero-hint { position: absolute; left: var(--pad); bottom: 26px; z-index: 3; display: flex; align-items: center; gap: 14px; font: 500 .62rem var(--fm); letter-spacing: .22em; text-transform: uppercase; color: var(--mut); }
 .hero-hint i { width: 1px; height: 46px; background: linear-gradient(var(--red), transparent); animation: hint 2s ease-in-out infinite; transform-origin: top; } @keyframes hint { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
 @media (max-height: 760px) { .hero .lead { display: none; } }

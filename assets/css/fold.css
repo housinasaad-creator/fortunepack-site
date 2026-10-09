@@ -28,30 +28,3 @@
 .pr-front::after { background: linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,0) 60%); } .pr-side::after { background: linear-gradient(90deg, rgba(0,0,0,.45), rgba(0,0,0,.1)); }
 .pr-back::after { background: rgba(0,0,0,.2); } .pr-lid::after { background: linear-gradient(135deg, rgba(255,255,255,.22), rgba(0,0,0,.18)); }
 .fold-outline { max-width: none; }
-
-/* ---------- واقعية العلبة: إضاءة، ظلال داخلية، لمعان، سماكة الكرتون ---------- */
-.fp .sh, .fp .ao, .fp .hl { position: absolute; inset: 0; pointer-events: none; display: block; }
-.fp-f .sh { background: #1c0f04; opacity: var(--df, 0); }
-.fp-b .sh { background: #000; opacity: var(--db, 0); }
-.fp-f .hl { background: linear-gradient(115deg, transparent 20%, rgba(255, 244, 222, .9) 50%, transparent 80%); opacity: var(--hf, 0); mix-blend-mode: soft-light; }
-.fp-b .hl { background: linear-gradient(112deg, transparent calc(var(--hp, 50%) - 24%), rgba(255, 255, 255, .85) var(--hp, 50%), transparent calc(var(--hp, 50%) + 24%)); opacity: var(--hb, 0); mix-blend-mode: screen; }
-.fp .ao { opacity: var(--ao, 0); }
-.fp-front .ao { background: linear-gradient(180deg, rgba(24, 12, 2, .62), rgba(24, 12, 2, .18) 45%, transparent 75%); }
-.fp-back .ao { background: linear-gradient(0deg, rgba(24, 12, 2, .62), rgba(24, 12, 2, .18) 45%, transparent 75%); }
-.fp-left .ao { background: linear-gradient(270deg, rgba(24, 12, 2, .6), rgba(24, 12, 2, .16) 45%, transparent 75%); }
-.fp-right .ao { background: linear-gradient(90deg, rgba(24, 12, 2, .6), rgba(24, 12, 2, .16) 45%, transparent 75%); }
-.fp-bottom .ao { background: radial-gradient(ellipse at 50% 50%, transparent 28%, rgba(24, 12, 2, .55) 100%); }
-.fp-lid .ao, .fp-tuck .ao { background: linear-gradient(0deg, rgba(24, 12, 2, .35), transparent 60%); }
-/* سماكة الكرتون على الحافة الحرّة: ليّنة بين طبقتين مع تموّج */
-.fp .edge { position: absolute; display: block; backface-visibility: visible; background: linear-gradient(#e4c392, #e4c392) top / 100% 2px no-repeat, linear-gradient(#e4c392, #e4c392) bottom / 100% 2px no-repeat, repeating-linear-gradient(90deg, #a47439 0 2px, #d8b47e 2px 6px); }
-.fp .edge.e-bot { left: 0; right: 0; top: 100%; height: 6px; transform-origin: 50% 0; transform: rotateX(-90deg); }
-.fp .edge.e-top { left: 0; right: 0; bottom: 100%; height: 6px; transform-origin: 50% 100%; transform: rotateX(90deg); }
-.fp .edge.e-left { top: 0; bottom: 0; right: 100%; width: 6px; transform-origin: 100% 50%; transform: rotateY(-90deg); background: linear-gradient(90deg, #e4c392, #e4c392) left / 2px 100% no-repeat, linear-gradient(90deg, #e4c392, #e4c392) right / 2px 100% no-repeat, repeating-linear-gradient(0deg, #a47439 0 2px, #d8b47e 2px 6px); }
-.fp .edge.e-right { top: 0; bottom: 0; left: 100%; width: 6px; transform-origin: 0 50%; transform: rotateY(90deg); background: linear-gradient(90deg, #e4c392, #e4c392) left / 2px 100% no-repeat, linear-gradient(90deg, #e4c392, #e4c392) right / 2px 100% no-repeat, repeating-linear-gradient(0deg, #a47439 0 2px, #d8b47e 2px 6px); }
-/* حبيبات ورق خفيفة + حواف مشطوفة على الأوجه المطبوعة */
-.fp-b { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07); background-image: linear-gradient(90deg, rgba(255, 255, 255, .1), transparent 2.5%, transparent 97.5%, rgba(255, 255, 255, .08)), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .5 0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='.55'/></svg>"); background-color: #0d0d0f; }
-.pr-lid { background-color: var(--red, #ed1c24) !important; }
-.pr-tag { position: relative; display: block; margin-top: 9px; font: 600 8px/1 'JetBrains Mono', monospace; letter-spacing: .22em; color: rgba(255, 255, 255, .55); text-align: center; white-space: nowrap; } .pr-tag.s { margin-top: 12px; font-size: 7px; }
-.pr-front .pr-in { flex-direction: column; } .pr-in { align-content: center; }
-.pr-ico { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; width: 100%; height: 100%; } .pr-ic { width: 30px; height: auto; color: rgba(255, 255, 255, .8); } .pr-ico .pr-mark { width: 30%; }
-.fold-outline { max-width: none; }
