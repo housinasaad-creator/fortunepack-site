@@ -143,9 +143,9 @@ section { position: relative; }
 .crop i:nth-child(1) { left: 36px; top: 96px; border-width: 1px 0 0 1px; } .crop i:nth-child(2) { right: 14px; top: 96px; border-width: 1px 1px 0 0; }
 .crop i:nth-child(3) { left: 36px; bottom: 14px; border-width: 0 0 1px 1px; } .crop i:nth-child(4) { right: 14px; bottom: 14px; border-width: 0 1px 1px 0; }
 @media (min-width: 1280px) { .ruler, .crop { display: block; } }
-.fab { position: fixed; right: 22px; bottom: 22px; z-index: 60; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: var(--red); color: #fff; box-shadow: 0 10px 30px rgba(237, 28, 36, .45); transition: transform .4s var(--ease); }
+.fab { position: fixed; right: 22px; bottom: 22px; z-index: 60; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: var(--red); color: #fff; box-shadow: 0 0 0 2px rgba(255, 255, 255, .95), 0 10px 30px rgba(0, 0, 0, .4); transition: transform .4s var(--ease); }
 .fab svg { width: 28px; height: 28px; } .fab:hover { transform: scale(1.1) rotate(-8deg); }
-.fab::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--red); animation: fab 2.6s ease-out infinite; }
+.fab::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .8); animation: fab 2.6s ease-out infinite; }
 @keyframes fab { from { transform: scale(1); opacity: .8; } to { transform: scale(1.7); opacity: 0; } }
 
 /* ---------- المحمِّل ---------- */
@@ -299,13 +299,12 @@ html[lang="ar"] .pc-d, html[lang="ar"] .gc p, html[lang="ar"] .rs p, html[lang="
 html[lang="ar"] .ltr[data-i18n] { direction: ltr; unicode-bidi: isolate; text-align: left; }
 
 /* ---------- المؤشر: يعكس لون الخلفية (يبقى ظاهراً فوق الأحمر والأبيض والأسود) ---------- */
-.cur { mix-blend-mode: difference; }
-.cur-dot { background: #fff; }
-.cur-rot::before { border-color: #fff; }
-.cur-rot b { background: #fff; }
-.is-link .cur-rot::before { background: rgba(255, 255, 255, .28); }
-.is-card .cur-rot::before { background: #fff; border-color: #fff; }
-.cur-lab { color: #000; }
+.cur-dot { background: var(--red); box-shadow: 0 0 0 2px #fff, 0 0 7px 2px rgba(0, 0, 0, .45); }
+.cur-rot::before { border: 1.5px solid var(--red); box-shadow: 0 0 0 1.5px #fff, 0 0 10px 1px rgba(0, 0, 0, .4); }
+.cur-rot b { background: var(--red); box-shadow: 0 0 0 1px #fff; }
+.is-link .cur-rot::before { background: rgba(237, 28, 36, .2); }
+.is-card .cur-rot::before { background: var(--red); border-color: var(--red); }
+.cur-lab { color: #fff; text-shadow: 0 0 3px rgba(0, 0, 0, .4); }
 
 /* ---------- سهم الصعود + توقيع الاستوديو ---------- */
 .totop { position: fixed; right: 26px; bottom: 92px; z-index: 60; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: rgba(11, 11, 12, .86); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: #fff; opacity: 0; visibility: hidden; translate: 0 14px; transition: opacity .4s, translate .5s var(--ease), visibility 0s .4s, background .3s; }
