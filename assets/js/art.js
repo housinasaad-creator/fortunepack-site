@@ -295,7 +295,13 @@
     const p = (FP_DATA.products || []).find((q) => q.slug === slug); if (!p) return '';
     return artSvg(p.shape, p.style, Object.assign({ v: VAR[slug] }, o || {}));
   };
+  /* الرسوم تُركَّب عند اقتراب البطاقة من الشاشة وتُفرَّغ عند ابتعادها (توفير ذاكرة) */
+  const artIO = new IntersectionObserver((en) => en.forEach((x) => {
+    const e = x.target;
+    if (x.isIntersecting) { if (!e.firstChild) e.innerHTML = FP.art(e.dataset.art); }
+    else if (e.firstChild) e.innerHTML = '';
+  }), { rootMargin: '1300px 0px' });
   FP.mountArt = function (root) {
-    (root || document).querySelectorAll('[data-art]').forEach((e) => { if (!e.dataset.done) { e.innerHTML = FP.art(e.dataset.art); e.dataset.done = '1'; } });
+    (root || document).querySelectorAll('[data-art]').forEach((e) => { if (!e._ao) { e._ao = 1; artIO.observe(e); } });
   };
 })();

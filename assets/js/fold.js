@@ -5,6 +5,7 @@ const FP = (window.FP = window.FP || {});
   كل شيء CSS ثلاثي الأبعاد خفيف (بدون WebGL). التقدّم p (0..1) دالة حتمية، فيعمل للأمام والخلف.
   الوجه الأمامي لكل لوح (كرتون خام) هو ما يُرى وهو مسطح؛ الوجه الخلفي (المطبوع) يصبح الوجه الخارجي للعلبة عند الطيّ.
 */
+const LN = Math.hypot(-.45, -.65, .62), LX = -.45 / LN, LY = -.65 / LN, LZ = .62 / LN;
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v)), seg = (p, a, b) => clamp((p - a) / (b - a), 0, 1), ss = (t) => t * t * (3 - 2 * t), lerp = (a, b, t) => a + (b - a) * t;
 
 function createFold(host, opts = {}) {
@@ -24,6 +25,16 @@ function createFold(host, opts = {}) {
   const wrap = (html) => `<div class="pr-in">${html}</div>`;
   front.b.innerHTML = wrap('<img src="assets/img/logo-light.svg" alt="" class="pr-logo">'); lid.b.innerHTML = wrap('<img src="assets/img/logo-mark.svg" alt="" class="pr-mark">'); left.b.innerHTML = right.b.innerHTML = wrap('<img src="assets/img/logo-mark.svg" alt="" class="pr-mark s">');
   back.b.innerHTML = wrap('<span class="pr-stripe"></span>'); bottom.b.innerHTML = wrap('<img src="assets/img/logo-mark.svg" alt="" class="pr-mark s">');
+  // علامات المناولة المطبوعة على الجدران (واقعية العلبة)
+  const ICO_UP = '<svg viewBox="0 0 40 52" class="pr-ic"><path d="M10 46V14M10 14l-6 8M10 14l6 8M28 46V14M28 14l-6 8M28 14l6 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const ICO_REC = '<svg viewBox="0 0 40 40" class="pr-ic"><path d="M20 5a15 15 0 1 1-13 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M4 4l3 9 9-3" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></svg>';
+  front.b.innerHTML = wrap('<img src="assets/img/logo-light.svg" alt="" class="pr-logo"><span class="pr-tag">OLUKLU MUKAVVA AMBALAJ · GAZİANTEP</span>');
+  left.b.innerHTML = wrap('<div class="pr-ico">' + ICO_UP + '<img src="assets/img/logo-mark.svg" alt="" class="pr-mark s">' + '</div>');
+  right.b.innerHTML = wrap('<div class="pr-ico">' + ICO_REC + '<span class="pr-tag s">KRAFT · E-B-C</span>' + '</div>');
+  const ALL = [bottom, front, back, left, right, lid, tuck];
+  ALL.forEach((q) => { q.f.insertAdjacentHTML('beforeend', '<i class="sh"></i><i class="ao"></i><i class="hl"></i>'); q.b.insertAdjacentHTML('beforeend', '<i class="sh"></i><i class="hl"></i>'); });
+  // سماكة الكرتون على الحواف الحرّة (مقطع مضلّع)
+  [[front, 'e-bot'], [back, 'e-top'], [left, 'e-left'], [right, 'e-right'], [lid, 'e-top'], [tuck, 'e-top']].forEach(([q, c]) => q.p.insertAdjacentHTML('beforeend', `<i class="edge ${c}"></i>`));
 
   // التسلسل الهرمي للمفاصل (المركز = منتصف القاعدة)
   bottom.p.style.left = (-W / 2) + 'px'; bottom.p.style.top = (-D / 2) + 'px'; net.appendChild(bottom.p);
@@ -47,7 +58,7 @@ function createFold(host, opts = {}) {
     `M${x0} ${y0} V${y0 - H} H${x0} V${y0 - H - D} H${x0 + 9} V${y0 - H - D - LT}`                                      // يسار أعلى
   ];
   const creases = [`M${x0} ${y0} H${x1}`, `M${x0} ${y1} H${x1}`, `M${x0} ${y0} V${y1}`, `M${x1} ${y0} V${y1}`, `M${x0} ${y0 - H} H${x1}`, `M${x0} ${y0 - H - D} H${x1}`];
-  svg.innerHTML = `<g class="cut">${outline.map((d) => `<path d="${d}"/>`).join('')}</g><g class="crease">${creases.map((d) => `<path d="${d}"/>`).join('')}</g><g class="head" style="opacity:0"><circle r="6" class="hd-a"/><path d="M-14 0H14M0 -14V14" class="hd-b"/></g>`;
+  svg.innerHTML = `<g class="cut">${outline.map((d) => `<path d="${d}"/>`).join('')}</g><g class="crease">${creases.map((d) => `<path d="${d}"/>`).join('')}</g><g class="head" style="opacity:0"><g class="hd-rot"><use href="#ladybug" x="-15" y="-15" width="30" height="30"/></g></g>`;
   svg.style.width = (W + 2 * H + 12) + 'px'; svg.style.height = (totalH + 12) + 'px'; svg.style.left = (-W / 2 - H - 6) + 'px'; svg.style.top = (-D / 2 - H - D - LT - 6) + 'px'; net.appendChild(svg);
   const cutPaths = [...svg.querySelectorAll('.cut path')], crPaths = [...svg.querySelectorAll('.crease path')], head = svg.querySelector('.head');
   const lens = cutPaths.map((p) => p.getTotalLength()); cutPaths.forEach((p, i) => { p.style.strokeDasharray = lens[i]; p.style.strokeDashoffset = lens[i]; });
@@ -56,10 +67,10 @@ function createFold(host, opts = {}) {
   let drawT = reduced ? 1 : 0, started = false;   // زمن الرسم الافتتاحي 0..1
   /* مرحلة "الراسم": يرسم الرأس خطوط القص واحداً بعد الآخر ثم تظهر خطوط الطيّ */
   function plotFrame(t) {
-    const n = cutPaths.length, per = 1 / n; let lastPt = null;
-    cutPaths.forEach((p, i) => { const k = ss(seg(t, i * per * .78, i * per * .78 + per * .9)); p.style.strokeDashoffset = lens[i] * (1 - k); if (k > 0 && k < 1) lastPt = p.getPointAtLength(lens[i] * k); });
+    const n = cutPaths.length, per = 1 / n; let lastPt = null, lastAng = 0;
+    cutPaths.forEach((p, i) => { const k = ss(seg(t, i * per * .78, i * per * .78 + per * .9)); p.style.strokeDashoffset = lens[i] * (1 - k); if (k > 0 && k < 1) { lastPt = p.getPointAtLength(lens[i] * k); const q = p.getPointAtLength(Math.min(lens[i], lens[i] * k + 3)); lastAng = Math.atan2(q.y - lastPt.y, q.x - lastPt.x) * 180 / Math.PI + 90; } });
     crPaths.forEach((p, i) => { p.style.opacity = ss(seg(t, .72 + i * .03, .86 + i * .03)); });
-    if (lastPt) { head.setAttribute('transform', `translate(${lastPt.x} ${lastPt.y})`); head.style.opacity = 1; } else head.style.opacity = t >= 1 ? 0 : head.style.opacity;
+    if (lastPt) { head.setAttribute('transform', `translate(${lastPt.x} ${lastPt.y}) rotate(${lastAng.toFixed(1)})`); head.style.opacity = 1; } else head.style.opacity = t >= 1 ? 0 : head.style.opacity;
     net.style.setProperty('--fill', ss(seg(t, .8, 1)).toFixed(3));
   }
   plotFrame(drawT);
@@ -69,7 +80,7 @@ function createFold(host, opts = {}) {
     const r = host.getBoundingClientRect(), s = Math.min(r.width / (W + 2 * H + 60), r.height / (totalH + 70)) * (opts.zoom || 1);
     lastScale = Math.max(.35, s);
   }
-  scale(); new ResizeObserver(scale).observe(host);
+  scale(); const ro = new ResizeObserver(scale); ro.observe(host); let dead = false;
 
   /* التقدم p: يضبط طيّ كل جدار + دوران المشهد */
   function apply(t, time) {
@@ -86,12 +97,28 @@ function createFold(host, opts = {}) {
     net.style.transform = `translate3d(0, ${ty}px, 0) scale(${lastScale * zoomK}) rotateX(${tilt}deg) rotateZ(${spin}deg)`;
     net.style.setProperty('--out', (1 - ss(seg(p, .1, .3))).toFixed(3));
     net.style.setProperty('--hinge', flatK.toFixed(3));
+    // إضاءة لامبرت تقريبية لكل وجه + إظهار لمعان الورنيش (فقط في الوضع الكامل)
+    if (document.documentElement.dataset.perf === 'full') {
+    const R = Math.PI / 180, sp = Math.sin, cs = Math.cos, wa = 90 * wallsA * R, wb = 90 * wallsB * R, la = wa + 90 * lidK * R, ta = la + 100 * tuckK * R;
+    const nrm = { bottom: [0, 0, 1], front: [0, -sp(wa), cs(wa)], back: [0, sp(wa), cs(wa)], left: [sp(wb), 0, cs(wb)], right: [-sp(wb), 0, cs(wb)], lid: [0, sp(la), cs(la)], tuck: [0, sp(ta), cs(ta)] };
+    const tl = tilt * R, sn = spin * R, csn = cs(sn), ssn = sp(sn), ctl = cs(tl), stl = sp(tl);
+    const light = (n) => { const x = n[0] * csn - n[1] * ssn, y = n[0] * ssn + n[1] * csn, z = n[2], y2 = y * ctl - z * stl, z2 = y * stl + z * ctl; return Math.max(0, x * LX + y2 * LY + z2 * LZ); };
+    const hp = ((spin * 1.7 + time * 9) % 150 + 150) % 150 - 25;
+    const names = ['bottom', 'front', 'back', 'left', 'right', 'lid', 'tuck'];
+    names.forEach((nm, i) => {
+      const n = nrm[nm], si = light(n), so = light([-n[0], -n[1], -n[2]]), q = ALL[i].p.style;
+      q.setProperty('--df', ((1 - (.30 + .70 * si)) * .78).toFixed(3)); q.setProperty('--hf', (Math.pow(si, 5) * .1).toFixed(3));
+      q.setProperty('--db', ((1 - (.42 + .58 * so)) * .5).toFixed(3)); q.setProperty('--hb', (Math.pow(so, 3.2) * .5).toFixed(3));
+      q.setProperty('--hp', hp.toFixed(1) + '%');
+    });
+    net.style.setProperty('--ao', (1 - flatK).toFixed(3));
+    }
     host.dataset.p = p.toFixed(3);
   }
   return {
     apply, plotFrame, setDraw(t) { drawT = t; plotFrame(t); },
-    play(cb) { if (started) return; started = true; if (reduced) { plotFrame(1); cb && cb(); return; } const t0 = performance.now(), dur = 3400; (function f(n) { const k = clamp((n - t0) / dur, 0, 1); plotFrame(k); if (k < 1) requestAnimationFrame(f); else { drawT = 1; cb && cb(); } })(t0); },
-    dispose() { host.innerHTML = ''; }
+    play(cb) { if (started) return; started = true; if (reduced) { plotFrame(1); cb && cb(); return; } const t0 = performance.now(), dur = 3400; (function f(n) { if (dead) return; const k = clamp((n - t0) / dur, 0, 1); plotFrame(k); if (k < 1) requestAnimationFrame(f); else { drawT = 1; cb && cb(); } })(t0); },
+    dispose() { dead = true; ro.disconnect(); host.innerHTML = ''; }
   };
 }
 function el(tag, cls) { const e = document.createElement(tag); if (cls) e.className = cls; return e; }

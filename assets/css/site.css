@@ -18,9 +18,9 @@
   --hh: 76px; --pad: clamp(20px, 4vw, 56px); --max: 1320px;
 }
 html[lang="ar"] {
-  --fd: 'Amiri', 'IBM Plex Sans Arabic', serif;
-  --fb: 'IBM Plex Sans Arabic', system-ui, sans-serif;
-  --fm: 'IBM Plex Sans Arabic', 'JetBrains Mono', sans-serif;
+  --fd: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+  --fb: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+  --fm: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
 }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--hh) + 20px); background: var(--ink); }
@@ -48,7 +48,9 @@ html[lang="ar"] :is(.hero-h1, .big, .ph-h1) { text-align: left; }
 html[lang="ar"] * { letter-spacing: 0 !important; }
 html[lang="ar"] em, html[lang="ar"] i { font-style: normal; }
 html[lang="ar"] :is(.kicker, .btn, .chip, .nav a, .lang button, .pc-cat, .ch-k, .stat span, small, th) { text-transform: none; }
-html[lang="ar"] :is(h1, h2, h3, .big, .hero-h1, .stat b, .sty-no, .gc h3) { line-height: 1.25; font-weight: 700; }
+html[lang="ar"] :is(h1, h2, h3, .big, .hero-h1, .stat b, .sty-no, .gc h3, .rs h3, .why-list h3, .pc h3, .ch h2, .ccard b, .ct-form h2, .qm-card h2, .lb-copy h2, .ps-b h3, .cta h2, .inq h2, .sh h2) { line-height: 1.22; font-weight: 800; letter-spacing: 0; }
+html[lang="ar"] .big-p { font-weight: 700; line-height: 1.5; }
+html[lang="ar"] .hero-h1 { font-weight: 900; }
 
 /* ---------- عناصر نصية ---------- */
 .kicker { display: flex; align-items: center; gap: 12px; font: 500 .72rem/1.2 var(--fm); letter-spacing: .22em; text-transform: uppercase; color: var(--red); }
@@ -123,14 +125,15 @@ section { position: relative; }
 .has-cur, .has-cur * { cursor: none !important; } .has-cur :is(input, textarea, select) { cursor: text !important; }
 .cur-dot { position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; border-radius: 50%; background: var(--red); transition: opacity .2s; }
 .cur-ring { position: absolute; left: 0; top: 0; width: 40px; height: 40px; translate: -50% -50%; transition: opacity .2s; }
-.cur-ring::before { content: ""; position: absolute; inset: 7px; border: 1px solid rgba(237, 28, 36, .9); border-radius: 50%; transition: transform .45s var(--ease), background .3s, border-color .3s; }
-.cur-ring b { position: absolute; background: var(--red); transition: transform .45s var(--ease); }
-.cur-ring b:nth-child(1) { left: 50%; top: 0; width: 1px; height: 9px; } .cur-ring b:nth-child(2) { left: 50%; bottom: 0; width: 1px; height: 9px; }
-.cur-ring b:nth-child(3) { top: 50%; left: 0; height: 1px; width: 9px; } .cur-ring b:nth-child(4) { top: 50%; right: 0; height: 1px; width: 9px; }
-.is-link .cur-ring::before { transform: scale(1.5); background: rgba(237, 28, 36, .14); } .is-link .cur-ring { rotate: 45deg; }
-.is-card .cur-ring::before { transform: scale(2.7); background: var(--red); border-color: var(--red); } .is-card .cur-ring b { transform: scale(0); } .is-card .cur-dot { opacity: 0; }
+.cur-rot { position: absolute; inset: 0; display: block; transition: rotate .45s var(--ease); }
+.cur-rot::before { content: ""; position: absolute; inset: 7px; border: 1px solid rgba(237, 28, 36, .9); border-radius: 50%; transition: transform .45s var(--ease), background .3s, border-color .3s; }
+.cur-rot b { position: absolute; background: var(--red); transition: transform .45s var(--ease); }
+.cur-rot b:nth-child(1) { left: 50%; top: 0; width: 1px; height: 9px; } .cur-rot b:nth-child(2) { left: 50%; bottom: 0; width: 1px; height: 9px; }
+.cur-rot b:nth-child(3) { top: 50%; left: 0; height: 1px; width: 9px; } .cur-rot b:nth-child(4) { top: 50%; right: 0; height: 1px; width: 9px; }
+.is-link .cur-rot::before { transform: scale(1.5); background: rgba(237, 28, 36, .14); } .is-link .cur-rot { rotate: 45deg; }
+.is-card .cur-rot::before { transform: scale(2.7); background: var(--red); border-color: var(--red); } .is-card .cur-rot b { transform: scale(0); } .is-card .cur-dot { opacity: 0; }
 .cur-lab { position: absolute; left: 0; top: 0; translate: -50% -50%; font: 600 .56rem/1 var(--fm); color: #fff; letter-spacing: .14em; text-transform: uppercase; opacity: 0; transition: opacity .25s; white-space: nowrap; }
-.is-card .cur-lab { opacity: 1; } .is-text .cur-ring, .is-text .cur-dot { opacity: 0; } .is-down .cur-ring::before { transform: scale(.8); }
+.is-card .cur-lab { opacity: 1; } .is-text .cur-ring, .is-text .cur-dot { opacity: 0; } .is-down .cur-rot::before { transform: scale(.8); }
 .ruler { position: fixed; left: 0; top: 0; bottom: 0; width: 26px; z-index: 40; pointer-events: none; display: none; --sy: 0;
   background: linear-gradient(rgba(128, 128, 128, .5) 0 1px, transparent 1px) right 0 top calc(var(--sy) * -1px) / 5px 3.7795px repeat-y, linear-gradient(rgba(128, 128, 128, .55) 0 1px, transparent 1px) right 0 top calc(var(--sy) * -1px) / 9px 18.8975px repeat-y, linear-gradient(rgba(128, 128, 128, .7) 0 1px, transparent 1px) right 0 top calc(var(--sy) * -1px) / 15px 37.795px repeat-y; }
 .ruler-flag { position: absolute; left: 0; top: 50%; translate: 0 -50%; display: block; padding: 3px 7px 3px 5px; background: var(--red); color: #fff; font: 600 .56rem/1 var(--fm); font-style: normal; letter-spacing: .04em; clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 0 100%); white-space: nowrap; }
@@ -276,19 +279,105 @@ main > section:not(.vis) *, main > section:not(.vis) *::before, main > section:n
   .cta-b .btn { width: 100%; }
 }
 
-/* ---------- العربية: أحجام أكبر للنصوص الصغيرة (الخط العربي يبدو أصغر من اللاتيني) ---------- */
-html[lang="ar"] .kicker { font-size: .95rem; font-weight: 500; }
-html[lang="ar"] .btn { font-size: .88rem; font-weight: 600; }
-html[lang="ar"] .btn--sm { font-size: .8rem; }
-html[lang="ar"] .nav a { font-size: .95rem; font-weight: 500; }
-html[lang="ar"] .nav a i { font-size: .55rem; }
-html[lang="ar"] .chip, html[lang="ar"] .opt, html[lang="ar"] .dw-types button { font-size: .88rem; }
-html[lang="ar"] .pc-cat, html[lang="ar"] .gc-n, html[lang="ar"] .ch-k, html[lang="ar"] .pc-no { font-size: .84rem; }
-html[lang="ar"] .pc-go, html[lang="ar"] .ct-count, html[lang="ar"] .crumb { font-size: .86rem; }
-html[lang="ar"] .stat span, html[lang="ar"] .hero-hint, html[lang="ar"] .foot-bot, html[lang="ar"] .foot h4 { font-size: .9rem; }
-html[lang="ar"] .fl-lab, html[lang="ar"] .dw-leg, html[lang="ar"] .ruler-flag { font-size: .78rem; }
-html[lang="ar"] .fld span, html[lang="ar"] .dwi > span, html[lang="ar"] .dw-res dt, html[lang="ar"] .mini-k, html[lang="ar"] .ps-n span, html[lang="ar"] .chips2 small, html[lang="ar"] .mrow small, html[lang="ar"] #sel-list small, html[lang="ar"] .pn small, html[lang="ar"] .ccard small { font-size: .8rem; }
-html[lang="ar"] .spec th[scope="row"], html[lang="ar"] .spec thead th { font-size: .86rem; }
-html[lang="ar"] .ps-c, html[lang="ar"] .rs small, html[lang="ar"] .mr-v { font-size: .92rem; }
-html[lang="ar"] .lead, html[lang="ar"] .sh .sub, html[lang="ar"] .hero .lead, html[lang="ar"] .sty-t p, html[lang="ar"] .ps-b p, html[lang="ar"] .lb-copy p { font-size: 1.15em; line-height: 1.9; }
-html[lang="ar"] .pc-d, html[lang="ar"] .gc p, html[lang="ar"] .rs p, html[lang="ar"] .why-list p, html[lang="ar"] .ch p { font-size: 1.04rem; line-height: 1.85; }
+/* ---------- العربية (Cairo): مقاسات النصوص الصغيرة ---------- */
+html[lang="ar"] body { line-height: 1.7; }
+html[lang="ar"] .kicker { font-size: .88rem; font-weight: 700; }
+html[lang="ar"] .btn { font-size: .84rem; font-weight: 700; }
+html[lang="ar"] .btn--sm { font-size: .78rem; }
+html[lang="ar"] .nav a { font-size: .9rem; font-weight: 600; }
+html[lang="ar"] .nav a i { font-size: .52rem; }
+html[lang="ar"] .chip, html[lang="ar"] .opt, html[lang="ar"] .dw-types button { font-size: .84rem; font-weight: 600; }
+html[lang="ar"] .pc-cat, html[lang="ar"] .gc-n, html[lang="ar"] .ch-k, html[lang="ar"] .pc-no { font-size: .78rem; font-weight: 600; }
+html[lang="ar"] .pc-go, html[lang="ar"] .ct-count, html[lang="ar"] .crumb { font-size: .82rem; font-weight: 600; }
+html[lang="ar"] .stat span, html[lang="ar"] .hero-hint, html[lang="ar"] .foot-bot, html[lang="ar"] .foot h4 { font-size: .86rem; font-weight: 600; }
+html[lang="ar"] .fl-lab, html[lang="ar"] .dw-leg, html[lang="ar"] .ruler-flag { font-size: .72rem; font-weight: 600; }
+html[lang="ar"] .fld span, html[lang="ar"] .dwi > span, html[lang="ar"] .dw-res dt, html[lang="ar"] .mini-k, html[lang="ar"] .ps-n span, html[lang="ar"] .chips2 small, html[lang="ar"] .mrow small, html[lang="ar"] #sel-list small, html[lang="ar"] .pn small, html[lang="ar"] .ccard small { font-size: .74rem; font-weight: 600; }
+html[lang="ar"] .spec th[scope="row"], html[lang="ar"] .spec thead th { font-size: .82rem; font-weight: 700; }
+html[lang="ar"] .ps-c, html[lang="ar"] .rs small, html[lang="ar"] .mr-v { font-size: .86rem; }
+html[lang="ar"] .lead, html[lang="ar"] .sh .sub, html[lang="ar"] .hero .lead, html[lang="ar"] .sty-t p, html[lang="ar"] .ps-b p, html[lang="ar"] .lb-copy p { line-height: 1.95; }
+html[lang="ar"] .pc-d, html[lang="ar"] .gc p, html[lang="ar"] .rs p, html[lang="ar"] .why-list p, html[lang="ar"] .ch p { line-height: 1.85; }
+html[lang="ar"] .ltr[data-i18n] { direction: ltr; unicode-bidi: isolate; text-align: left; }
+
+/* ---------- المؤشر: يعكس لون الخلفية (يبقى ظاهراً فوق الأحمر والأبيض والأسود) ---------- */
+.cur { mix-blend-mode: difference; }
+.cur-dot { background: #fff; }
+.cur-rot::before { border-color: #fff; }
+.cur-rot b { background: #fff; }
+.is-link .cur-rot::before { background: rgba(255, 255, 255, .28); }
+.is-card .cur-rot::before { background: #fff; border-color: #fff; }
+.cur-lab { color: #000; }
+
+/* ---------- سهم الصعود + توقيع الاستوديو ---------- */
+.totop { position: fixed; right: 26px; bottom: 92px; z-index: 60; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: rgba(11, 11, 12, .86); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: #fff; opacity: 0; visibility: hidden; translate: 0 14px; transition: opacity .4s, translate .5s var(--ease), visibility 0s .4s, background .3s; }
+.totop.show { opacity: 1; visibility: visible; translate: 0 0; transition: opacity .4s, translate .5s var(--ease), background .3s; }
+.totop:hover { background: var(--red); }
+.tt-ring { position: absolute; inset: 0; width: 100%; height: 100%; rotate: -90deg; }
+.tt-bg { fill: none; stroke: rgba(255, 255, 255, .22); stroke-width: 2; } .tt-pr { fill: none; stroke: var(--red); stroke-width: 2.4; stroke-dasharray: 100; stroke-dashoffset: 100; stroke-linecap: round; }
+.totop:hover .tt-pr { stroke: #fff; }
+.tt-ar { position: relative; width: 20px; height: 20px; rotate: -90deg; transition: translate .4s var(--ease); } .totop:hover .tt-ar { translate: 0 -3px; }
+.foot-credit { color: var(--mut2); } .foot-credit a { color: #fff; border-bottom: 1px solid var(--red); padding-bottom: 1px; transition: color .3s; } .foot-credit a:hover { color: var(--red3); }
+@media (max-width: 640px) { .totop { right: 17px; bottom: 76px; width: 44px; height: 44px; } }
+
+/* ---------- أداء: لا نرسم الأقسام البعيدة عن الشاشة ---------- */
+main section:not(.hero):not(.phero):not(.ph), footer.foot { content-visibility: auto; contain-intrinsic-size: auto 760px; }
+
+/* ===== مستويات الأداء: full / lite / ultra (تُحدَّد تلقائياً من قوة الجهاز ومعدل الإطارات) ===== */
+html:not([data-perf="full"]) .fx { display: none; }
+html:not([data-perf="full"]) :is(.site.scrolled, .ct-bar, .totop, .stage-tog, .call, .qm-back, .dw-leg) { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+html:not([data-perf="full"]) .site.scrolled { background: rgba(11, 11, 12, .97); }
+html:not([data-perf="full"]) .ct-bar { background: rgba(11, 11, 12, .98); }
+html:not([data-perf="full"]) .cur { mix-blend-mode: normal; }
+html:not([data-perf="full"]) .cur-dot, html:not([data-perf="full"]) .cur-rot b { background: var(--red); }
+html:not([data-perf="full"]) .cur-rot::before { border-color: var(--red); }
+html:not([data-perf="full"]) .hero-bg::after, html:not([data-perf="full"]) .fp .sh, html:not([data-perf="full"]) .fp .hl, html:not([data-perf="full"]) .fp .ao { display: none; }
+html:not([data-perf="full"]) *, html:not([data-perf="full"]) *::before, html:not([data-perf="full"]) *::after { animation-iteration-count: 1 !important; }
+html:not([data-perf="full"]) .flw { animation-iteration-count: infinite !important; }
+html:not([data-perf="full"]) .art--hero { animation: none; }
+html[data-perf="ultra"] .flw, html[data-perf="ultra"] .v-dash, html[data-perf="ultra"] .v-w { animation: none !important; }
+html[data-perf="ultra"] .rv { opacity: 1; transform: none; transition: none; }
+html[data-perf="ultra"] .pc, html[data-perf="ultra"] .gc, html[data-perf="ultra"] .btn, html[data-perf="ultra"] .ccard { transition: none; }
+html[data-perf="ultra"] .loader { display: none; }
+html[data-perf="ultra"] .ruler, html[data-perf="ultra"] .crop { display: none !important; }
+html[data-perf="ultra"] .hero { height: auto; }
+html[data-perf="ultra"] .hero-pin { position: relative; height: auto; min-height: 100svh; }
+html[data-perf="ultra"] .hero-grid { height: auto; min-height: 100svh; }
+html[data-perf="ultra"] .hero .ch { grid-area: auto; opacity: 1; transform: none; margin-bottom: 14px; }
+html[data-perf="ultra"] .hero .chap-bar, html[data-perf="ultra"] .hero-hint, html[data-perf="ultra"] .floor { display: none; }
+html[data-perf="ultra"] .hero-static { display: grid; }
+.hero-static { display: none; position: absolute; inset: 0; place-items: center; padding: 70px 8% 30px; } .hero-static svg { width: 100%; height: auto; max-height: 100%; }
+.perf-tg { display: inline-flex; align-items: center; gap: 9px; font: 500 .74rem var(--fm); color: var(--mut2); transition: color .3s; } .perf-tg:hover { color: #fff; }
+.perf-tg i { position: relative; width: 28px; height: 16px; border-radius: 99px; background: rgba(255, 255, 255, .16); transition: background .3s; } .perf-tg i::after { content: ""; position: absolute; top: 2px; left: 2px; width: 12px; height: 12px; border-radius: 50%; background: #fff; transition: translate .35s var(--ease); }
+.perf-tg[aria-pressed="true"] i { background: var(--red); } .perf-tg[aria-pressed="true"] i::after { translate: 12px 0; }
+html[lang="ar"] .perf-tg { font-size: .86rem; }
+
+/* ===== الدعسوقة (المرافِقة): تمشي، تنتظر، وتصعد ===== */
+.bug { display: block; width: 22px; height: 22px; animation: bugwob .32s ease-in-out infinite alternate; }
+@keyframes bugwob { from { rotate: -8deg; } to { rotate: 8deg; } }
+.bug-pos { position: absolute; display: block; pointer-events: none; line-height: 0; }
+.bug-pos:not(.go) .bug { animation-play-state: paused; }
+html[data-perf="ultra"] .bug { animation: none !important; }
+/* شاشة التحميل: تمشي على شريط التقدّم */
+.ld-track { position: relative; width: 210px; height: 2px; margin: 34px auto 14px; }
+.ld-track .ld-bar { margin: 0; width: 100%; }
+.ld-bug { left: 0; top: -22px; transform: translateX(-11px) rotate(90deg); }
+/* شريط فصول الهيرو: تتقدّم مع التمرير (حسب الاتجاه) */
+.chap-bug { left: 0; top: -12px; width: 22px; height: 22px; transform: translateX(-50%) rotate(90deg); transition: transform .35s var(--ease); }
+/* خط الإنتاج العمودي */
+.ps-bug { left: -10px; top: 0; width: 22px; height: 22px; transform: translateY(-4px) rotate(180deg); transition: transform .35s var(--ease); z-index: 3; }
+/* نافذة عرض السعر: تعبر الحافة العلوية عند الفتح */
+.qm-card { overflow: hidden auto; }
+.qm-bug { left: 0; top: 4px; opacity: 0; }
+.qm.open .qm-bug { animation: qmwalk 3.2s ease-in-out .55s both; }
+@keyframes qmwalk { 0% { opacity: 0; transform: translateX(10px) rotate(90deg); } 10% { opacity: 1; } 88% { opacity: 1; } 100% { opacity: 0; transform: translateX(min(700px, 92vw)) rotate(90deg); } }
+/* لا نتائج: تتلفّت يمنة ويسرة */
+.ct-none { display: grid; justify-items: center; gap: 12px; padding: 60px 0; color: var(--mut); font-size: 1.2rem; } .ct-none[hidden] { display: none; }
+.ct-none .look { display: block; animation: look 3.6s ease-in-out infinite; } .ct-none .bug { width: 34px; height: 34px; }
+@keyframes look { 0%, 100% { rotate: 0deg; } 20% { rotate: -50deg; } 45% { rotate: 38deg; } 70% { rotate: -24deg; } }
+/* 404: دعسوقة تائهة */
+.lost-sec { overflow: hidden; }
+.lost-bug { position: absolute; left: 0; top: 0; width: 44px; height: 44px; z-index: 2; offset-path: path('M 40 520 C 200 380, 330 640, 520 470 S 820 260, 980 400 S 1250 560, 1400 300'); offset-rotate: auto 90deg; animation: lostwalk 16s linear infinite alternate; pointer-events: none; }
+.lost-bug .bug { width: 44px; height: 44px; }
+@keyframes lostwalk { from { offset-distance: 0%; } to { offset-distance: 100%; } }
+/* طيران الدعسوقة عند الضغط على سهم الصعود + دعسوقة الخمول */
+.bug-fly { position: fixed; z-index: 75; width: 24px; height: 24px; pointer-events: none; line-height: 0; }
+.bug-fly .bug { width: 24px; height: 24px; }

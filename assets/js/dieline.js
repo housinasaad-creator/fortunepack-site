@@ -10,8 +10,8 @@
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const r1 = (n) => Math.round(n * 10) / 10;
   const M = (pts) => 'M' + pts.map((p) => r1(p[0]) + ' ' + r1(p[1])).join('L') + 'Z';
-  const FLUTE = { E: { th: 1.5, kg: 1.0 }, B: { th: 3, kg: 1.0 }, C: { th: 4, kg: 1.0 }, BC: { th: 6.5, kg: 1.0 } };
-  const GSM_DEFAULT = { E: 340, B: 440, C: 520, BC: 860 };
+  const FLUTE = { E: { th: 1.5 }, B: { th: 3 }, C: { th: 4 }, EB: { th: 4.5 }, BB: { th: 6 }, BC: { th: 6.5 } };
+  const GSM_DEFAULT = { E: 340, B: 440, C: 520, EB: 640, BB: 820, BC: 860 };
   FP.FLUTE = FLUTE; FP.GSM_DEFAULT = GSM_DEFAULT;
 
   /* ------------------------------------------------------------ هندسة */
@@ -144,7 +144,7 @@ ${o.mini ? '' : dimT + dimL}${tot}`.replace('<svg', '<svg') + `<!--vb:${r1(vx)} 
 <div class="dw-ctl">${full ? `<div class="dw-types" role="tablist"><button type="button" data-t="rsc" role="tab" data-i18n="studio.s.rsc"></button><button type="button" data-t="mailer" role="tab" data-i18n="studio.s.mailer"></button><button type="button" data-t="tuck" role="tab" data-i18n="studio.s.tuck"></button></div>` : ''}
 <div class="dw-in">${inp('L', 'studio.L')}${inp('W', 'studio.W')}${inp('H', 'studio.H')}</div>
 ${full ? `<div class="dw-pre"><span data-i18n="studio.presets"></span><button type="button" data-p="s" data-i18n="studio.pre.1"></button><button type="button" data-p="m" data-i18n="studio.pre.2"></button><button type="button" data-p="l" data-i18n="studio.pre.3"></button></div>
-<div class="dw-fl"><label><span data-i18n="studio.flute"></span><div class="dw-seg" data-seg="flute"><button type="button" data-v="E">E</button><button type="button" data-v="B">B</button><button type="button" data-v="C">C</button><button type="button" data-v="BC">BC</button></div></label>
+<div class="dw-fl"><label><span data-i18n="studio.flute"></span><div class="dw-seg" data-seg="flute"><button type="button" data-v="E">E</button><button type="button" data-v="B">B</button><button type="button" data-v="C">C</button><button type="button" data-v="EB">EB</button><button type="button" data-v="BB">BB</button><button type="button" data-v="BC">BC</button></div></label>
 <label class="dwi dwi--g"><span data-i18n="studio.gsm"></span><div class="dwi-r"><input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="4" data-k="gsm" value="${st.gsm}"><em>g/m²</em></div></label></div>` : ''}
 ${opts.mini ? '' : `<dl class="dw-res"><div><dt data-i18n="studio.r.sheet"></dt><dd data-o="sheet"></dd></div>${full ? '<div><dt data-i18n="studio.r.area"></dt><dd data-o="area"></dd></div><div><dt data-i18n="studio.r.thick"></dt><dd data-o="th"></dd></div><div><dt data-i18n="studio.r.weight"></dt><dd data-o="wt"></dd></div><div><dt data-i18n="studio.r.efficiency"></dt><dd data-o="eff"></dd></div>' : ''}</dl>
 <p class="dw-note" data-i18n="studio.note"></p><button type="button" class="btn btn--primary dw-q"><span data-i18n="btn.quote_dims"></span><svg class="ar"><use href="#i-arrow"/></svg></button>`}</div>`;
@@ -160,8 +160,18 @@ ${opts.mini ? '' : `<dl class="dw-res"><div><dt data-i18n="studio.r.sheet"></dt>
       svg.style.setProperty('--sw', r1(u * 1.7 * 100) / 100); svg.style.setProperty('--sw2', r1(u * 1.1 * 100) / 100); svg.style.setProperty('--da', `${r1(u * 7)} ${r1(u * 5)}`);
       host.querySelectorAll('.dw-svg .die-cut, .dw-svg .die-crease').forEach((p) => { p.style.strokeWidth = p.classList.contains('die-cut') ? (u * 1.8) : (u * 1.2); });
       if (anim && svg.getBoundingClientRect().width && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        const cp = svg.querySelector('.die-cut'), len = cp.getTotalLength();
-        cp.style.strokeDasharray = len; cp.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], { duration: 1500, easing: 'cubic-bezier(.6,0,.2,1)' }).onfinish = () => { cp.style.strokeDasharray = ''; };
+        const cp = svg.querySelector('.die-cut'), len = cp.getTotalLength(), dur = 1700, t0 = performance.now(), fancy = document.documentElement.dataset.perf === 'full';
+        let bug = null;
+        if (fancy) { const w = u * 30; bug = document.createElementNS('http://www.w3.org/2000/svg', 'g'); bug.innerHTML = `<use href="#ladybug" x="${-w / 2}" y="${-w / 2}" width="${w}" height="${w}"/>`; svg.appendChild(bug); }
+        const ease = (t) => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+        cp.style.strokeDasharray = len; cp.style.strokeDashoffset = len;
+        (function step(now) {
+          if (!cp.isConnected) return;
+          const t = Math.min(1, (now - t0) / dur), k = ease(t);
+          cp.style.strokeDashoffset = len * (1 - k);
+          if (bug) { const pt = cp.getPointAtLength(len * k), q = cp.getPointAtLength(Math.min(len, len * k + 2)); bug.setAttribute('transform', `translate(${pt.x} ${pt.y}) rotate(${(Math.atan2(q.y - pt.y, q.x - pt.x) * 180 / Math.PI + 90).toFixed(1)})`); }
+          if (t < 1) requestAnimationFrame(step); else { cp.style.strokeDasharray = ''; cp.style.strokeDashoffset = ''; if (bug) bug.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500, fill: 'forwards' }).onfinish = () => bug.remove(); }
+        })(t0);
         svg.querySelector('.die-fill').animate([{ opacity: 0 }, { opacity: 1 }], { duration: 900, delay: 900, fill: 'backwards' });
         svg.querySelector('.die-crease').animate([{ opacity: 0 }, { opacity: 1 }], { duration: 700, delay: 1100, fill: 'backwards' });
       }
@@ -204,7 +214,7 @@ ${opts.mini ? '' : `<dl class="dw-res"><div><dt data-i18n="studio.r.sheet"></dt>
       new IntersectionObserver((en) => { vis = en[0].isIntersecting; if (vis && !raf) raf = requestAnimationFrame(loop); }, { threshold: .1 }).observe(host);
       const ease = (t) => t * t * (3 - 2 * t);
       function loop(now) {
-        raf = 0; if (!vis) return;
+        raf = 0; if (!vis || document.documentElement.dataset.perf !== 'full') return;
         if (!t0) t0 = now;
         if (now - (loop.last || 0) < 32) { raf = requestAnimationFrame(loop); return; } loop.last = now;
         const T = 3600, k = (now - t0) / T;

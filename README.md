@@ -4,7 +4,6 @@ Static, dependency-free website for **Fortunepack Ambalaj Oluklu Mukavva San. ve
 
 - 3 languages: Turkish (default), English, Arabic. The layout never mirrors; Arabic text flows RTL inside its own blocks.
 - Pages: Home (scroll-driven fold hero), Catalogue (23 products), 23 product pages, About, Production, Box Studio (live die-line generator), Contact, Privacy.
-- The site carries `noindex` while it is a private preview (remove the meta tag in `src/build.py` before launch).
 - Pure HTML/CSS/vanilla JS. No build step is needed to *run* the site; `src/build.py` (kept outside this folder) only regenerates the HTML from the content files.
 
 ## Editing content

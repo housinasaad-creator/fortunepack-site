@@ -14,7 +14,11 @@
   const list = $('#ps-list'), fill = list && $('.ps-line b', list);
   if (list) {
     let t = 0;
-    const on = () => { t = 0; const r = list.getBoundingClientRect(), p = Math.min(1, Math.max(0, (innerHeight * .6 - r.top) / r.height)); fill.style.transform = `scaleY(${p.toFixed(3)})`; };
+    const bug = $('.ps-bug', list); let lastP = 0, tm = 0;
+    const on = () => {
+      t = 0; const r = list.getBoundingClientRect(), p = Math.min(1, Math.max(0, (innerHeight * .6 - r.top) / r.height)); fill.style.transform = `scaleY(${p.toFixed(3)})`;
+      if (bug) { bug.style.top = (p * 100).toFixed(2) + '%'; const d = p - lastP; if (Math.abs(d) > .0004) { bug.classList.add('go'); bug.style.transform = `translateY(-4px) rotate(${d > 0 ? 180 : 0}deg)`; clearTimeout(tm); tm = setTimeout(() => bug.classList.remove('go'), 260); } lastP = p; }
+    };
     addEventListener('scroll', () => { if (!t) t = requestAnimationFrame(on); }, { passive: true }); on();
   }
 })();
