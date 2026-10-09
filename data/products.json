@@ -1,0 +1,722 @@
+{
+ "products": [
+  {
+   "slug": "katlanir-karton",
+   "n": 1,
+   "cat": "folding",
+   "shape": "carton",
+   "style": "white-red",
+   "die": "tuck",
+   "mats": [
+    "mE_white",
+    "mE_kraft",
+    "mB_whitetop"
+   ],
+   "lam": [
+    "l.matte",
+    "l.gloss",
+    "l.soft",
+    "l.varnish"
+   ],
+   "extras": [
+    "x.window",
+    "x.uv",
+    "x.foil",
+    "x.emboss"
+   ],
+   "prn": "prn.both",
+   "moq": "moq.1000",
+   "lead": "lead.std",
+   "ship": "ship.flat",
+   "real": null
+  },
+  {
+   "slug": "tek-nokta-yapistirmali",
+   "n": 2,
+   "cat": "folding",
+   "shape": "carton",
+   "style": "black-red",
+   "die": "tuck",
+   "mats": [
+    "mE_white",
+    "mE_kraft",
+    "mB_whitetop"
+   ],
+   "lam": [
+    "l.matte",
+    "l.gloss",
+    "l.soft"
+   ],
+   "extras": [
+    "x.window",
+    "x.uv",
+    "x.foil"
+   ],
+   "prn": "prn.both",
+   "moq": "moq.1000",
+   "lead": "lead.std",
+   "ship": "ship.flat",
+   "real": null
+  },
+  {
+   "slug": "iki-nokta-yandan-yapistirmali",
+   "n": 3,
+   "cat": "folding",
+   "shape": "carton",
+   "style": "kraft-black",
+   "die": "tuck",
+   "mats": [
+    "mE_white",
+    "mE_kraft",
+    "mB_whitetop"
+   ],
+   "lam": [
+    "l.matte",
+    "l.varnish",
+    "l.none"
+   ],
+   "extras": [
+    "x.window",
+    "x.perf"
+   ],
+   "prn": "prn.both",
+   "moq": "moq.1000",
+   "lead": "lead.std",
+   "ship": "ship.flat",
+   "real": null
+  },
+  {
+   "slug": "crash-lock-otomatik-taban",
+   "n": 4,
+   "cat": "folding",
+   "shape": "carton",
+   "style": "white-black",
+   "die": "tuck",
+   "mats": [
+    "mE_white",
+    "mE_kraft",
+    "mB_whitetop"
+   ],
+   "lam": [
+    "l.matte",
+    "l.gloss",
+    "l.soft"
+   ],
+   "extras": [
+    "x.window",
+    "x.uv",
+    "x.emboss"
+   ],
+   "prn": "prn.both",
+   "moq": "moq.2000",
+   "lead": "lead.std",
+   "ship": "ship.flat",
+   "real": null
+  },
+  {
+   "slug": "dort-kose-yapistirmali",
+   "n": 5,
+   "cat": "folding",
+   "shape": "tray",
+   "style": "white-red",
+   "die": "tuck",
+   "mats": [
+    "mE_white",
+    "mE_kraft",
+    "mB_whitetop"
+   ],
+   "lam": [
+    "l.matte",
+    "l.gloss"
+   ],
+   "extras": [
+    "x.window",
+    "x.perf"
+   ],
+   "prn": "prn.both",
+   "moq": "moq.1000",
+   "lead": "lead.std",
+   "ship": "ship.flat",
+   "real": null
+  },
+  {
+   "slug": "alti-nokta-yapistirmali",
+   "n": 6,
+   "cat": "folding",
+   "shape": "carton",
+   "style": "kraft-red",
+   "die": "tuck",
+   "mats": [
+    "mE_white",
+    "mE_kraft",
+    "mB_whitetop"
+   ],
+   "lam": [
+    "l.matte",
+    "l.varnish",
+    "l.none"
+   ],
+   "extras": [
+    "x.window",
+    "x.perf",
+    "x.divider"
+   ],
+   "prn": "prn.both",
+   "moq": "moq.1000",
+   "lead": "lead.long",
+   "ship": "ship.flat",
+   "real": null
+  },
+  {
+   "slug": "sekiz-nokta-yapistirmali",
+   "n": 7,
+   "cat": "folding",
+   "shape": "carton",
+   "style": "black-red",
+   "die": "tuck",
+   "mats": [
+    "mE_white",
+    "mE_kraft",
+    "mB_whitetop"
+   ],
+   "lam": [
+    "l.matte",
+    "l.soft",
+    "l.varnish"
+   ],
+   "extras": [
+    "x.window",
+    "x.divider",
+    "x.perf"
+   ],
+   "prn": "prn.both",
+   "moq": "moq.1000",
+   "lead": "lead.long",
+   "ship": "ship.flat",
+   "real": null
+  },
+  {
+   "slug": "patates-kizartmasi-kutusu",
+   "n": 8,
+   "cat": "food",
+   "shape": "fry",
+   "style": "red-white",
+   "die": "tuck",
+   "mats": [
+    "mB_white",
+    "mE_kraft",
+    "mB_grease"
+   ],
+   "lam": [
+    "l.varnish",
+    "l.matte",
+    "l.none"
+   ],
+   "extras": [
+    "x.perf",
+    "x.handle"
+   ],
+   "prn": "prn.flexo",
+   "moq": "moq.2000",
+   "lead": "lead.std",
+   "ship": "ship.flat",
+   "real": null
+  },
+  {
+   "slug": "yapistirmasiz-katlanir",
+   "n": 9,
+   "cat": "folding",
+   "shape": "carton",
+   "style": "kraft-black",
+   "die": "tuck",
+   "mats": [
+    "mE_white",
+    "mE_kraft",
+    "mB_whitetop"
+   ],
+   "lam": [
+    "l.matte",
+    "l.varnish",
+    "l.none"
+   ],
+   "extras": [
+    "x.window",
+    "x.perf",
+    "x.tape"
+   ],
+   "prn": "prn.both",
+   "moq": "moq.500",
+   "lead": "lead.std",
+   "ship": "ship.flat",
+   "real": null
+  },
+  {
+   "slug": "slotter-kutular",
+   "n": 10,
+   "cat": "shipping",
+   "shape": "rsc",
+   "style": "kraft-red",
+   "die": "rsc",
+   "mats": [
+    "mC_kraft",
+    "mB_test",
+    "mBC_kraft"
+   ],
+   "lam": [
+    "l.varnish",
+    "l.none"
+   ],
+   "extras": [
+    "x.handle",
+    "x.perf",
+    "x.divider",
+    "x.tape"
+   ],
+   "prn": "prn.flexo",
+   "moq": "moq.500",
+   "lead": "lead.std",
+   "ship": "ship.flat",
+   "real": "stack"
+  },
+  {
+   "slug": "teleskop-kutular",
+   "n": 11,
+   "cat": "shipping",
+   "shape": "telescope",
+   "style": "white-black",
+   "die": "rsc",
+   "mats": [
+    "mC_kraft",
+    "mB_test",
+    "mBC_kraft"
+   ],
+   "lam": [
+    "l.matte",
+    "l.gloss",
+    "l.soft"
+   ],
+   "extras": [
+    "x.window",
+    "x.emboss",
+    "x.divider"
+   ],
+   "prn": "prn.litho",
+   "moq": "moq.1000",
+   "lead": "lead.long",
+   "ship": "ship.set",
+   "real": null
+  },
+  {
+   "slug": "pencereli-kutular",
+   "n": 12,
+   "cat": "finishing",
+   "shape": "window",
+   "style": "white-red",
+   "die": "tuck",
+   "mats": [
+    "mE_white",
+    "mB_whitetop",
+    "mE_metal"
+   ],
+   "lam": [
+    "l.matte",
+    "l.gloss"
+   ],
+   "extras": [
+    "x.window",
+    "x.uv",
+    "x.perf"
+   ],
+   "prn": "prn.both",
+   "moq": "moq.1000",
+   "lead": "lead.long",
+   "ship": "ship.flat",
+   "real": null
+  },
+  {
+   "slug": "spot-uv-kutular",
+   "n": 13,
+   "cat": "finishing",
+   "shape": "carton",
+   "style": "black-uv",
+   "die": "tuck",
+   "mats": [
+    "mE_white",
+    "mB_whitetop",
+    "mE_metal"
+   ],
+   "lam": [
+    "l.matte",
+    "l.soft"
+   ],
+   "extras": [
+    "x.uv",
+    "x.emboss",
+    "x.window"
+   ],
+   "prn": "prn.litho",
+   "moq": "moq.1000",
+   "lead": "lead.long",
+   "ship": "ship.flat",
+   "real": null
+  },
+  {
+   "slug": "sicak-yaldiz",
+   "n": 14,
+   "cat": "finishing",
+   "shape": "carton",
+   "style": "black-foil",
+   "die": "tuck",
+   "mats": [
+    "mE_white",
+    "mB_whitetop",
+    "mE_metal"
+   ],
+   "lam": [
+    "l.matte",
+    "l.soft"
+   ],
+   "extras": [
+    "x.foil",
+    "x.emboss"
+   ],
+   "prn": "prn.litho",
+   "moq": "moq.1000",
+   "lead": "lead.long",
+   "ship": "ship.flat",
+   "real": null
+  },
+  {
+   "slug": "sapli-tasima-kolileri",
+   "n": 15,
+   "cat": "shipping",
+   "shape": "carry",
+   "style": "kraft-black",
+   "die": "rsc",
+   "mats": [
+    "mC_kraft",
+    "mB_test",
+    "mBC_kraft"
+   ],
+   "lam": [
+    "l.varnish",
+    "l.none",
+    "l.matte"
+   ],
+   "extras": [
+    "x.handle",
+    "x.perf",
+    "x.tape"
+   ],
+   "prn": "prn.flexo",
+   "moq": "moq.500",
+   "lead": "lead.std",
+   "ship": "ship.flat",
+   "real": null
+  },
+  {
+   "slug": "kraft-slotter",
+   "n": 16,
+   "cat": "shipping",
+   "shape": "rsc",
+   "style": "kraft-plain",
+   "die": "rsc",
+   "mats": [
+    "mC_kraft",
+    "mB_test",
+    "mBC_kraft"
+   ],
+   "lam": [
+    "l.none",
+    "l.varnish"
+   ],
+   "extras": [
+    "x.handle",
+    "x.divider",
+    "x.tape"
+   ],
+   "prn": "prn.flexo",
+   "moq": "moq.500",
+   "lead": "lead.std",
+   "ship": "ship.flat",
+   "real": "open"
+  },
+  {
+   "slug": "pizza-kutulari",
+   "n": 17,
+   "cat": "food",
+   "shape": "pizza",
+   "style": "kraft-red",
+   "die": "mailer",
+   "mats": [
+    "mB_white",
+    "mE_kraft",
+    "mB_grease"
+   ],
+   "lam": [
+    "l.varnish",
+    "l.none"
+   ],
+   "extras": [
+    "x.perf",
+    "x.tape"
+   ],
+   "prn": "prn.flexo",
+   "moq": "moq.2000",
+   "lead": "lead.std",
+   "ship": "ship.flat",
+   "real": "pizza"
+  },
+  {
+   "slug": "acik-pencereli",
+   "n": 18,
+   "cat": "finishing",
+   "shape": "windowopen",
+   "style": "white-black",
+   "die": "tuck",
+   "mats": [
+    "mE_white",
+    "mB_whitetop",
+    "mE_metal"
+   ],
+   "lam": [
+    "l.matte",
+    "l.gloss"
+   ],
+   "extras": [
+    "x.window",
+    "x.perf"
+   ],
+   "prn": "prn.both",
+   "moq": "moq.1000",
+   "lead": "lead.long",
+   "ship": "ship.flat",
+   "real": null
+  },
+  {
+   "slug": "metalize-selefon",
+   "n": 19,
+   "cat": "finishing",
+   "shape": "carton",
+   "style": "metal",
+   "die": "tuck",
+   "mats": [
+    "mE_white",
+    "mB_whitetop",
+    "mE_metal"
+   ],
+   "lam": [
+    "l.metal",
+    "l.gloss"
+   ],
+   "extras": [
+    "x.uv",
+    "x.foil",
+    "x.emboss"
+   ],
+   "prn": "prn.litho",
+   "moq": "moq.2000",
+   "lead": "lead.long",
+   "ship": "ship.flat",
+   "real": null
+  },
+  {
+   "slug": "kozmetik-ilac",
+   "n": 20,
+   "cat": "special",
+   "shape": "cosmetic",
+   "style": "white-red",
+   "die": "tuck",
+   "mats": [
+    "mE_white",
+    "mB_kraft",
+    "mB_whitetop"
+   ],
+   "lam": [
+    "l.matte",
+    "l.soft",
+    "l.gloss"
+   ],
+   "extras": [
+    "x.uv",
+    "x.foil",
+    "x.emboss"
+   ],
+   "prn": "prn.litho",
+   "moq": "moq.2000",
+   "lead": "lead.long",
+   "ship": "ship.flat",
+   "real": null
+  },
+  {
+   "slug": "teshir-standi",
+   "n": 21,
+   "cat": "special",
+   "shape": "display",
+   "style": "red-black",
+   "die": "tuck",
+   "mats": [
+    "mE_white",
+    "mB_kraft",
+    "mB_whitetop"
+   ],
+   "lam": [
+    "l.matte",
+    "l.gloss",
+    "l.varnish"
+   ],
+   "extras": [
+    "x.window",
+    "x.divider",
+    "x.uv"
+   ],
+   "prn": "prn.litho",
+   "moq": "moq.500",
+   "lead": "lead.long",
+   "ship": "ship.set",
+   "real": null
+  },
+  {
+   "slug": "eticaret-kutusu",
+   "n": 22,
+   "cat": "special",
+   "shape": "mailer",
+   "style": "kraft-red",
+   "die": "mailer",
+   "mats": [
+    "mE_white",
+    "mB_kraft",
+    "mB_whitetop"
+   ],
+   "lam": [
+    "l.matte",
+    "l.varnish",
+    "l.none"
+   ],
+   "extras": [
+    "x.tape",
+    "x.emboss",
+    "x.divider"
+   ],
+   "prn": "prn.digital",
+   "moq": "moq.500",
+   "lead": "lead.std",
+   "ship": "ship.flat",
+   "real": "mailer"
+  },
+  {
+   "slug": "baskili-gida-kolisi",
+   "n": 23,
+   "cat": "food",
+   "shape": "rsc",
+   "style": "red-print",
+   "die": "rsc",
+   "mats": [
+    "mB_white",
+    "mE_kraft",
+    "mB_grease"
+   ],
+   "lam": [
+    "l.varnish",
+    "l.matte",
+    "l.gloss"
+   ],
+   "extras": [
+    "x.handle",
+    "x.window",
+    "x.perf"
+   ],
+   "prn": "prn.both",
+   "moq": "moq.1000",
+   "lead": "lead.std",
+   "ship": "ship.flat",
+   "real": "tulip"
+  }
+ ],
+ "cats": [
+  "folding",
+  "shipping",
+  "food",
+  "finishing",
+  "special"
+ ],
+ "mats": {
+  "mE_white": {
+   "gsm": "300–400",
+   "fl": "E",
+   "th": "1,5"
+  },
+  "mE_kraft": {
+   "gsm": "280–380",
+   "fl": "E",
+   "th": "1,5"
+  },
+  "mB_whitetop": {
+   "gsm": "400–520",
+   "fl": "B",
+   "th": "3"
+  },
+  "mB_test": {
+   "gsm": "380–480",
+   "fl": "B",
+   "th": "3"
+  },
+  "mB_white": {
+   "gsm": "400–520",
+   "fl": "B",
+   "th": "3"
+  },
+  "mB_grease": {
+   "gsm": "420–540",
+   "fl": "B",
+   "th": "3"
+  },
+  "mB_kraft": {
+   "gsm": "380–500",
+   "fl": "B",
+   "th": "3"
+  },
+  "mC_kraft": {
+   "gsm": "450–600",
+   "fl": "C",
+   "th": "4"
+  },
+  "mBC_kraft": {
+   "gsm": "750–1000",
+   "fl": "BC",
+   "th": "6,5"
+  },
+  "mE_metal": {
+   "gsm": "320–420",
+   "fl": "E",
+   "th": "1,5"
+  }
+ },
+ "catMats": {
+  "folding": [
+   "mE_white",
+   "mE_kraft",
+   "mB_whitetop"
+  ],
+  "shipping": [
+   "mC_kraft",
+   "mB_test",
+   "mBC_kraft"
+  ],
+  "food": [
+   "mB_white",
+   "mE_kraft",
+   "mB_grease"
+  ],
+  "finishing": [
+   "mE_white",
+   "mB_whitetop",
+   "mE_metal"
+  ],
+  "special": [
+   "mE_white",
+   "mB_kraft",
+   "mB_whitetop"
+  ]
+ }
+}
