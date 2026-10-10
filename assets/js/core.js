@@ -109,7 +109,7 @@
     });
   }
   document.addEventListener('click', (e) => {
-    if (e.target.closest('[data-quote]')) { e.preventDefault(); FP.openQuote(); }
+    if (e.target.closest('[data-quote]')) { e.preventDefault(); const qb = e.target.closest('[data-quote]'); FP.openQuote(qb.dataset.prod ? { product: qb.dataset.prod } : undefined); }
     else if (e.target.closest('[data-sample]')) { e.preventDefault(); const pg = $('.pg-product'); FP.openQuote({ kind: 'sample', product: pg && pg.dataset.slug, extra: FP.getSelection ? FP.getSelection() : [] }); }
   });
 

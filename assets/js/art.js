@@ -13,13 +13,14 @@
     white: { t: '#ffffff', l: '#ecebe7', r: '#d2d0ca', ink: '#0b0b0c', ln: 'rgba(0,0,0,.22)', in: '#bdbab3', in2: '#a9a69f' },
     black: { t: '#34343a', l: '#1c1c20', r: '#0e0e10', ink: '#ffffff', ln: 'rgba(255,255,255,.14)', in: '#09090a', in2: '#050506' },
     red: { t: '#f6474d', l: '#ed1c24', r: '#b4121a', ink: '#ffffff', ln: 'rgba(0,0,0,.25)', in: '#7d0c11', in2: '#650a0e' },
-    metal: { t: '#e9eef2', l: '#a9b3bb', r: '#6e7880', ink: '#0b0b0c', ln: 'rgba(0,0,0,.3)', in: '#59626a', in2: '#3f464c' }
+    metal: { t: '#e9eef2', l: '#a9b3bb', r: '#6e7880', ink: '#0b0b0c', ln: 'rgba(0,0,0,.3)', in: '#59626a', in2: '#3f464c' },
+    clear: { t: '#f1f7fb', l: '#d4e3ee', r: '#b6cddd', ink: '#0b0b0c', ln: 'rgba(50,90,125,.38)', in: '#8fa8bb', in2: '#7a93a6' }
   };
   /* style => [قاعدة، لون التمييز] */
   const STYLES = {
     'white-red': ['white', 'red'], 'black-red': ['black', 'red'], 'kraft-black': ['kraft', 'black'], 'white-black': ['white', 'black'],
     'kraft-red': ['kraft', 'red'], 'red-white': ['red', 'white'], 'kraft-plain': ['kraft', null], 'red-print': ['red', 'white'],
-    'black-uv': ['black', 'uv'], 'black-foil': ['black', 'foil'], 'metal': ['metal', 'red'], 'red-black': ['red', 'black']
+    'black-uv': ['black', 'uv'], 'black-foil': ['black', 'foil'], 'metal': ['metal', 'red'], 'red-black': ['red', 'black'], 'clear-red': ['clear', 'red']
   };
   const ACC = { red: '#ed1c24', black: '#0b0b0c', white: '#ffffff', uv: '#ffffff', foil: 'url(#g-foil)' };
 
@@ -241,6 +242,41 @@
       s += box(ctx, 0, 0, -0.2, w, d, 0.4, PAL.kraft).svg.replace(/<polygon[^>]+data-f="t"\/>/, '');
       return s;
     },
+    /* ---- بلاستيك ونايلون (ثخانة رقيقة) ---- */
+    bag(ctx, pal, acc) {      // كيس نايلون مسطّح
+      const w = 98, d = 9, h = 134, b = box(ctx, 0, 0, 0, w, d, h, pal);
+      return b.svg + g(faceMat(ctx, 'l', 0, 0, 0, w, d, h),
+        `<path d="M0 ${f1(h * .1)}H${w}" stroke="rgba(30,70,110,.5)" stroke-width="1.5" stroke-dasharray="4 3"/>` +
+        markUse(w * .3, h * .34, w * .4, '#ed1c24') + bar(w * .2, h * .78, w * .6, 3.4, '#0b0b0c', .85) + bar(w * .3, h * .78 + 9, w * .4, 2.6, '#0b0b0c', .45) +
+        `<path d="M${f1(w * .13)} ${f1(h * .2)}L${f1(w * .2)} ${f1(h * .9)}" stroke="#fff" stroke-width="3.4" opacity=".6"/>`);
+    },
+    carrier(ctx, pal, acc) {  // كيس حمل بمقبض
+      const w = 112, d = 34, h = 132, b = box(ctx, 0, 0, 0, w, d, h, pal);
+      return b.svg + g(faceMat(ctx, 'l', 0, 0, 0, w, d, h),
+        `<rect x="${f1(w * .3)}" y="${f1(h * .06)}" width="${f1(w * .4)}" height="${f1(h * .13)}" rx="${f1(h * .065)}" fill="#0c0c0e" stroke="rgba(0,0,0,.4)" stroke-width="1"/>` +
+        markUse(w * .12, h * .42, w * .22, '#ffffff') + bar(w * .42, h * .5, w * .42, 3.6, '#ffffff', .95) + bar(w * .42, h * .5 + 10, w * .28, 2.8, '#ffffff', .6)) + printR(ctx, 0, 0, 0, w, d, h, pal, null);
+    },
+    pouch(ctx, pal, acc) {    // كيس مضلّع (بطن) مع رباط
+      const w = 86, d = 54, h = 118, b = box(ctx, 0, 0, 0, w, d, h, pal), P = ctx.P;
+      let s = b.svg + g(faceMat(ctx, 'l', 0, 0, 0, w, d, h),
+        `<path d="M0 ${f1(h * .1)}H${w}" stroke="rgba(255,255,255,.28)" stroke-width="1.2"/>` +
+        markUse(w * .14, h * .34, w * .3, '#ed1c24') + bar(w * .52, h * .42, w * .34, 3.4, '#ffffff', .9) + bar(w * .52, h * .42 + 9, w * .22, 2.6, '#ffffff', .5) + bar(0, h * .74, w, h * .1, '#ed1c24', 1));
+      const a = P(w * .4, d, h * .96), c = P(w * .6, d, h * .96);
+      s += `<path d="M${f1(a[0])} ${f1(a[1])}Q${f1((a[0] + c[0]) / 2)} ${f1(a[1] + 16)} ${f1(c[0])} ${f1(c[1])}" fill="none" stroke="#ed1c24" stroke-width="2.2" stroke-linecap="round"/>`;
+      return s;
+    },
+    sack(ctx, pal, acc) {     // جوال منسوج
+      const w = 112, d = 50, h = 150, b = box(ctx, 0, 0, 0, w, d, h, pal);
+      let wl = '', wr2 = '';
+      for (let i = 0; i < w; i += 5) wl += `M${i} 0V${h}`;
+      for (let j = 0; j < h; j += 5) wl += `M0 ${j}H${w}`;
+      for (let i = 0; i < d; i += 5) wr2 += `M${i} 0V${h}`;
+      for (let j = 0; j < h; j += 5) wr2 += `M0 ${j}H${d}`;
+      return b.svg + g(faceMat(ctx, 'l', 0, 0, 0, w, d, h),
+        `<path d="${wl}" stroke="rgba(0,0,0,.09)" stroke-width=".8" fill="none"/><path d="M0 ${f1(h * .05)}H${w}" stroke="#ed1c24" stroke-width="2" stroke-dasharray="3 2.5"/>` +
+        markUse(w * .14, h * .22, w * .3, '#ed1c24') + bar(w * .52, h * .3, w * .34, 3.8, '#0b0b0c', .85) + bar(w * .52, h * .3 + 10, w * .22, 2.8, '#0b0b0c', .45) + bar(0, h * .66, w, h * .12, '#ed1c24', 1)) +
+        g(faceMat(ctx, 'r', 0, 0, 0, w, d, h), `<path d="${wr2}" stroke="rgba(0,0,0,.12)" stroke-width=".8" fill="none"/><path d="M0 ${f1(h * .05)}H${d}" stroke="#ed1c24" stroke-width="2" stroke-dasharray="3 2.5"/>`);
+    },
     mailer(ctx, pal, acc) {
       const w = 146, d = 102, h = 34, P = ctx.P;
       // غطاء مفتوح للخلف
@@ -298,10 +334,10 @@
   /* الرسوم تُركَّب عند اقتراب البطاقة من الشاشة وتُفرَّغ عند ابتعادها (توفير ذاكرة) */
   const artIO = new IntersectionObserver((en) => en.forEach((x) => {
     const e = x.target;
-    if (x.isIntersecting) { if (!e.firstChild) e.innerHTML = FP.art(e.dataset.art); }
+    if (x.isIntersecting) { if (!e.firstChild) e.innerHTML = e.dataset.shape ? FP.artSvg(e.dataset.shape, e.dataset.style) : FP.art(e.dataset.art); }
     else if (e.firstChild) e.innerHTML = '';
   }), { rootMargin: '1300px 0px' });
   FP.mountArt = function (root) {
-    (root || document).querySelectorAll('[data-art]').forEach((e) => { if (!e._ao) { e._ao = 1; artIO.observe(e); } });
+    (root || document).querySelectorAll('[data-art],[data-shape]').forEach((e) => { if (!e._ao) { e._ao = 1; artIO.observe(e); } });
   };
 })();
