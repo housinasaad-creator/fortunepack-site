@@ -119,6 +119,22 @@
   }
   function shadow(ctx, cx, cy, rx, ry) { return `<ellipse cx="${f1(cx)}" cy="${f1(cy)}" rx="${f1(rx)}" ry="${f1(ry)}" fill="url(#g-sh)"/>`; }
 
+  /* بلاستيك: أدوات مساعدة */
+  const pal_l = (p) => p.l;
+  const CUT = '#0c0c0e', noTop = (x) => x.replace(/<polygon[^>]+data-f="t"\/>/, '');
+  function clearBag(ctx, pal, kind) {       // كيس شفاف (يظهر المحتوى خلفه)
+    const w = 100, d = 9, h = 132, m = faceMat(ctx, 'l', 0, 0, 0, w, d, h);
+    const items = [['#ed1c24', .12, .58, .2, .3], ['#f4f2ee', .38, .5, .22, .38], ['#0b0b0c', .66, .62, .2, .26]]
+      .map((q) => `<rect x="${f1(w * q[1])}" y="${f1(h * q[2])}" width="${f1(w * q[3])}" height="${f1(h * q[4])}" rx="3" fill="${q[0]}" opacity=".92"/>`).join('');
+    let s = g(m, items);
+    s += box(ctx, 0, 0, 0, w, d, h, pal, { fillL: 'rgba(214,230,242,.5)', fillR: 'rgba(150,182,206,.72)', fillT: 'rgba(240,248,253,.85)' }).svg;
+    let det = `<path d="M${f1(w * .12)} ${f1(h * .2)}L${f1(w * .19)} ${f1(h * .9)}" stroke="#fff" stroke-width="3.4" opacity=".6"/><path d="M0 ${f1(h * .95)}H${w}" stroke="rgba(30,70,110,.45)" stroke-width="1.2" stroke-dasharray="2 2"/>`;
+    if (kind === 'flap') det += `<rect x="0" y="0" width="${w}" height="${f1(h * .11)}" fill="rgba(255,255,255,.72)"/><path d="M0 ${f1(h * .11)}H${w}" stroke="rgba(30,70,110,.5)" stroke-width="1"/><path d="M${f1(w * .78)} ${f1(h * .11)}h${f1(w * .1)}l${f1(-w * .05)} ${f1(h * .06)}z" fill="#ed1c24"/>`;
+    else if (kind === 'zip') det += `<rect x="0" y="${f1(h * .1)}" width="${w}" height="${f1(h * .04)}" fill="rgba(255,255,255,.62)"/><path d="M0 ${f1(h * .1)}H${w}M0 ${f1(h * .14)}H${w}" stroke="rgba(30,70,110,.55)" stroke-width="1.1"/><rect x="${f1(w * .68)}" y="${f1(h * .085)}" width="${f1(w * .09)}" height="${f1(h * .07)}" rx="2" fill="#ed1c24"/><circle cx="${f1(w * .5)}" cy="${f1(h * .045)}" r="3.2" fill="${CUT}"/>`;
+    else det += `<path d="M0 ${f1(h * .07)}H${w}" stroke="rgba(30,70,110,.4)" stroke-width="1" stroke-dasharray="3 3"/>`;
+    return s + g(m, det);
+  }
+
   /* ------- الأشكال ------- */
   const SHAPES = {
     carton(ctx, pal, acc, o) {
@@ -276,6 +292,49 @@
         `<path d="${wl}" stroke="rgba(0,0,0,.09)" stroke-width=".8" fill="none"/><path d="M0 ${f1(h * .05)}H${w}" stroke="#ed1c24" stroke-width="2" stroke-dasharray="3 2.5"/>` +
         markUse(w * .14, h * .22, w * .3, '#ed1c24') + bar(w * .52, h * .3, w * .34, 3.8, '#0b0b0c', .85) + bar(w * .52, h * .3 + 10, w * .22, 2.8, '#0b0b0c', .45) + bar(0, h * .66, w, h * .12, '#ed1c24', 1)) +
         g(faceMat(ctx, 'r', 0, 0, 0, w, d, h), `<path d="${wr2}" stroke="rgba(0,0,0,.12)" stroke-width=".8" fill="none"/><path d="M0 ${f1(h * .05)}H${d}" stroke="#ed1c24" stroke-width="2" stroke-dasharray="3 2.5"/>`);
+    },
+    bagplain(ctx, pal) { return clearBag(ctx, pal, 'plain'); },
+    bagflap(ctx, pal) { return clearBag(ctx, pal, 'flap'); },
+    bagzip(ctx, pal) { return clearBag(ctx, pal, 'zip'); },
+    roll(ctx, pal) {          // رول أكياس قمامة
+      const r = 40, h = 66, RX = 1.2247 * r, RY = .7071 * r, top = ctx.P(r, r, h), bot = ctx.P(r, r, 0), B = ctx.B, tx = top[0], ty = top[1], bx = bot[0], by = bot[1];
+      B.x0 = Math.min(B.x0, tx - RX); B.x1 = Math.max(B.x1, tx + RX); B.y0 = Math.min(B.y0, ty - RY); B.y1 = Math.max(B.y1, by + RY);
+      const body = `M${f1(tx - RX)} ${f1(ty)}L${f1(bx - RX)} ${f1(by)}A${f1(RX)} ${f1(RY)} 0 0 0 ${f1(bx + RX)} ${f1(by)}L${f1(tx + RX)} ${f1(ty)}Z`;
+      const half = `M${f1(tx)} ${f1(ty)}L${f1(bx)} ${f1(by)}A${f1(RX)} ${f1(RY)} 0 0 0 ${f1(bx + RX)} ${f1(by)}L${f1(tx + RX)} ${f1(ty)}Z`;
+      const band = (z, c, wd) => `<path d="M${f1(bx - RX)} ${f1(by - z)}A${f1(RX)} ${f1(RY)} 0 0 0 ${f1(bx + RX)} ${f1(by - z)}" fill="none" stroke="${c}" stroke-width="${wd}"/>`;
+      return `<path d="${body}" fill="${pal_l(pal)}" stroke="${pal.ln}" stroke-width=".8"/><path d="${half}" fill="rgba(0,0,0,.32)"/>` + band(h * .3, '#ed1c24', 4) + band(h * .66, '#ed1c24', 4) + band(h * .92, 'rgba(255,255,255,.55)', 1.2).replace('fill="none"', 'fill="none" stroke-dasharray="3 3"') +
+        `<ellipse cx="${f1(tx)}" cy="${f1(ty)}" rx="${f1(RX)}" ry="${f1(RY)}" fill="${pal.t}" stroke="${pal.ln}" stroke-width=".8"/><ellipse cx="${f1(tx)}" cy="${f1(ty)}" rx="${f1(RX * .36)}" ry="${f1(RY * .36)}" fill="#050506"/>` +
+        markUse(bx - 11, by - h * .62 + RY * .35, 22, '#ed1c24');
+    },
+    tee(ctx, pal) {           // كيس حمل بحمّالات (أتلت)
+      const w = 104, d = 10, h = 136, bh = h * .8, sw = w * .17;
+      let s = noTop(box(ctx, 0, 0, 0, w, d, bh, pal).svg) + box(ctx, w * .13, 0, bh, sw, d, h - bh, pal).svg + box(ctx, w * .7, 0, bh, sw, d, h - bh, pal).svg;
+      const m = faceMat(ctx, 'l', 0, 0, 0, w, d, bh);
+      return s + g(m, `<path d="M${f1(w * .3)} 0C${f1(w * .3)} ${f1(bh * .17)} ${f1(w * .7)} ${f1(bh * .17)} ${f1(w * .7)} 0Z" fill="${CUT}"/>` +
+        markUse(w * .16, bh * .3, w * .26, '#ed1c24') + bar(w * .5, bh * .36, w * .34, 3.4, pal.ink, .85) + bar(w * .5, bh * .36 + 9, w * .22, 2.6, pal.ink, .45) + bar(0, bh * .78, w, bh * .1, '#ed1c24', 1));
+    },
+    drawstring(ctx, pal) {    // كيس بحبل شدّ
+      const w = 86, d = 44, h = 120, m = faceMat(ctx, 'l', 0, 0, 0, w, d, h), cord = pal === PAL.red ? '#ffffff' : '#ed1c24';
+      return noTop(box(ctx, 0, 0, 0, w, d, h, pal).svg) + g(m,
+        `<path d="M0 0H${f1(w * .3)}C${f1(w * .3)} ${f1(h * .1)} ${f1(w * .12)} ${f1(h * .12)} 0 ${f1(h * .22)}Z" fill="${CUT}"/><path d="M${w} 0H${f1(w * .7)}C${f1(w * .7)} ${f1(h * .1)} ${f1(w * .88)} ${f1(h * .12)} ${w} ${f1(h * .22)}Z" fill="${CUT}"/>` +
+        `<path d="M${f1(w * .3)} ${f1(h * .05)}Q${f1(w * .5)} ${f1(h * .2)} ${f1(w * .7)} ${f1(h * .05)}" fill="none" stroke="${cord}" stroke-width="2.4" stroke-linecap="round"/><path d="M${f1(w * .46)} ${f1(h * .13)}q${f1(-w * .06)} ${f1(h * .12)} ${f1(-w * .02)} ${f1(h * .2)}M${f1(w * .54)} ${f1(h * .13)}q${f1(w * .06)} ${f1(h * .12)} ${f1(w * .02)} ${f1(h * .2)}" fill="none" stroke="${cord}" stroke-width="2.2" stroke-linecap="round"/>` +
+        markUse(w * .3, h * .4, w * .4, pal === PAL.red ? '#ffffff' : '#ed1c24') + bar(w * .22, h * .78, w * .56, 3.4, pal.ink, .85) + bar(w * .32, h * .78 + 9, w * .36, 2.6, pal.ink, .45));
+    },
+    bigbag(ctx, pal) {        // بيغ باغ (جوال كبير بعراوي)
+      const w = 104, d = 104, h = 112, P = ctx.P;
+      let wl = '', wr2 = '';
+      for (let i = 0; i < w; i += 6) wl += `M${i} 0V${h}`;
+      for (let j = 0; j < h; j += 6) wl += `M0 ${j}H${w}`;
+      for (let i = 0; i < d; i += 6) wr2 += `M${i} 0V${h}`;
+      for (let j = 0; j < h; j += 6) wr2 += `M0 ${j}H${d}`;
+      let s = box(ctx, 0, 0, 0, w, d, h, pal).svg + g(faceMat(ctx, 'l', 0, 0, 0, w, d, h),
+        `<path d="${wl}" stroke="rgba(0,0,0,.08)" stroke-width=".8" fill="none"/>` + markUse(w * .12, h * .2, w * .26, '#ed1c24') + bar(w * .46, h * .28, w * .4, 3.8, pal.ink, .85) + bar(w * .46, h * .28 + 10, w * .26, 2.8, pal.ink, .45) + bar(0, h * .62, w, h * .12, '#ed1c24', 1)) +
+        g(faceMat(ctx, 'r', 0, 0, 0, w, d, h), `<path d="${wr2}" stroke="rgba(0,0,0,.12)" stroke-width=".8" fill="none"/>`);
+      [[0, 0], [0, d], [w, 0], [w, d]].forEach((c) => {
+        const a = P(c[0], c[1], h), t = P(c[0], c[1], h + 36);
+        s += `<path d="M${f1(a[0] - 8)} ${f1(a[1])}L${f1(a[0] - 8)} ${f1(t[1] + 8)}Q${f1(a[0] - 8)} ${f1(t[1])} ${f1(a[0])} ${f1(t[1])}Q${f1(a[0] + 8)} ${f1(t[1])} ${f1(a[0] + 8)} ${f1(t[1] + 8)}L${f1(a[0] + 8)} ${f1(a[1])}" fill="none" stroke="#dcd9d2" stroke-width="5" stroke-linejoin="round"/>`;
+      });
+      return s;
     },
     mailer(ctx, pal, acc) {
       const w = 146, d = 102, h = 34, P = ctx.P;
