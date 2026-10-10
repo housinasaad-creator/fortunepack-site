@@ -7,7 +7,7 @@
   const $ = (s, r) => (r || document).querySelector(s), $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const root = document.documentElement;
-  FP.CFG = { wa: '905537410520', insta: 'fortunepack.tr' };       // رقم واتساب مؤقّت للعرض التجريبي
+  FP.CFG = { wa: '905326764794', insta: 'fortunepack.tr' };       // رقم واتساب = رقم الهاتف الحقيقي للشركة (0532 676 47 94)
   FP.reduced = reduced; FP.$ = $; FP.$$ = $$;
   FP.lang = root.lang || 'tr';
   FP.t = (k) => { const d = D.i18n[FP.lang]; return (d && d[k] != null ? d[k] : D.i18n.tr[k]) || k; };
