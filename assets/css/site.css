@@ -380,3 +380,5 @@ html[data-perf="ultra"] .bug { animation: none !important; }
 /* طيران الدعسوقة عند الضغط على سهم الصعود + دعسوقة الخمول */
 .bug-fly { position: fixed; z-index: 75; width: 24px; height: 24px; pointer-events: none; line-height: 0; }
 .bug-fly .bug { width: 24px; height: 24px; }
+.stats-in--4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 760px) { .stats-in--4 { grid-template-columns: repeat(2, 1fr); gap: 26px 14px; } }
