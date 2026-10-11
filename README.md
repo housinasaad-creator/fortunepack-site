@@ -12,15 +12,8 @@ All texts are plain text, one key per string, in `locales/tr.json`, `locales/en.
 (the same data is embedded in `assets/js/data.js`, which the pages load). Product data lives in `data/products.json`.
 A future admin panel only has to edit these JSON files and re-export `assets/js/data.js`.
 
-## Things to confirm with the client
+## Status
 
-- WhatsApp number: `FP.CFG.wa` in `assets/js/core.js` (currently a placeholder).
-- Full address, phone and e-mail (only the address printed on the client's box photo and Instagram are used for now).
-- Product specifications (board weights, minimum order, lead time) are illustrative until confirmed.
-
-## Preview locally
-
-```
-python -m http.server 8080
-```
-then open http://localhost:8080/
+- Contact details are real (address from the tax certificate, phone/WhatsApp, e-mail, hours, map).
+- This GitHub Pages copy is a **noindex preview**. The launch build (`python src/make_prod.py`, kept outside this folder) produces an indexable `dist/` + ZIP for the client's own hosting.
+- Still to confirm with the client: About details (vision, capacity, certificates, references), real product specifications and the plastics range.
