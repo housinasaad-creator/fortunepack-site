@@ -18,6 +18,5 @@ A future admin panel only has to edit these JSON files and re-export `assets/js/
 - This GitHub Pages copy is a **noindex preview**. The launch build (`python src/make_prod.py`, kept outside this folder) produces an indexable `dist/` + ZIP for the client's own hosting.
 - Still to confirm with the client: About details (vision, capacity, certificates, references), real product specifications and the plastics range.
 
-
-## Hero as video (2026-10-21)
-The home hero (flat sheet folding into a printed box) is now a pre-rendered high-res video played in four scroll steps (`assets/hero`, engine `assets/js/hero-video.js`, plus a reversed twin for smooth back-scroll). The live CSS-3D fold (`fold.js`) is kept intact in `startLive()` of `home.js`: add `?live3d` to run it (also used for reduced-motion / data-saver / video failure). The generator (`src/build.py`) emits the video markup. Sources before the change: `_backup_before_video_hero`.
+## Hero: live 3D again (2026-10-22)
+The hero is the live 3D scene again, a little lighter (lower resolution cap, fewer particles, simpler parts) and released from memory when far away. Devices with 4 cores or fewer, or 2 GB of RAM or less, skip the 3D hero: it becomes one still screen so the first scroll leaves it. Add `?hero=on` or `?hero=off` to force either way. The pre-rendered video version of the hero is kept in `_video_hero_version` (not deployed).
