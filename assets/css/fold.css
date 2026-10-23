@@ -29,11 +29,20 @@
 .pr-back::after { background: rgba(0,0,0,.2); } .pr-lid::after { background: linear-gradient(135deg, rgba(255,255,255,.22), rgba(0,0,0,.18)); }
 .fold-outline { max-width: none; }
 
-/* جهاز ضعيف (home.js → هيرو شاشة واحدة بالرسم الثابت والعنوان الأول، فيُتخطّى من أول سكرول) */
-.hero-weak .hero { height: auto; }
-.hero-weak .hero-pin { position: relative; height: auto; min-height: 100svh; }
-.hero-weak .hero-grid { height: auto; min-height: 100svh; }
-.hero-weak .hero .ch { grid-area: auto; opacity: 1; transform: none; margin-bottom: 14px; }
-.hero-weak .hero .ch:not(:first-child) { display: none; }
-.hero-weak .hero .chap-bar, .hero-weak .hero-hint, .hero-weak .floor { display: none; }
-.hero-weak .hero-static { display: grid; }
+/* الهيرو فيديو (js/home.js): الخلفية والطيّ مخبوزان في الفيديو؛ النص والشريط والتلميح تبقى حيّة فوقه. بدون html.hv-on يعود الهيرو الحي القديم كما كان */
+.hv, .hv-poster { display: none; }
+html.hv-on .hv, html.hv-on .hv-poster { display: block; }
+.hero-pin .hv, .hero-pin .hv-poster, .hero-pin .hv-poster img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+.hero-pin .hv-poster { pointer-events: none; transition: opacity .9s var(--ease, ease) .1s; }
+.hero-pin.on3d .hv-poster { opacity: 0; }
+html:not(.hv-on) .hv, html:not(.hv-on) .hv-poster { display: none !important; }
+html.hv-on .hero-bg, html.hv-on .hero-stage .floor, html.hv-on #fold-host { display: none; }
+/* على الأجهزة الضعيفة (مستوى ultra) يبقى الهيرو المثبّت بفيديو خفيف: لا نُسقِطه إلى التخطيط الساكن */
+html.hv-on[data-perf="ultra"] .hero { height: 430vh; }
+html.hv-on[data-perf="ultra"] .hero-pin { position: sticky; height: 100svh; min-height: 0; }
+html.hv-on[data-perf="ultra"] .hero-grid { height: 100%; min-height: 0; }
+html.hv-on[data-perf="ultra"] .hero .ch { grid-area: 1 / 1; opacity: 0; transform: translateY(14px); margin-bottom: 0; }
+html.hv-on[data-perf="ultra"] .hero .ch.on { opacity: 1; transform: none; }
+html.hv-on[data-perf="ultra"] .hero .chap-bar { display: block; }
+html.hv-on[data-perf="ultra"] .hero-hint { display: flex; }
+html.hv-on[data-perf="ultra"] .hero-static { display: none; }
