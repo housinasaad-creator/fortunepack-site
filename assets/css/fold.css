@@ -46,3 +46,11 @@ html.hv-on[data-perf="ultra"] .hero .ch.on { opacity: 1; transform: none; }
 html.hv-on[data-perf="ultra"] .hero .chap-bar { display: block; }
 html.hv-on[data-perf="ultra"] .hero-hint { display: flex; }
 html.hv-on[data-perf="ultra"] .hero-static { display: none; }
+
+/* الهيرو شاشة واحدة: الفيديو الدائر خلف العنوان الأول فقط (بلا قصة مثبّتة بالتمرير) */
+html.hv-on .hero, html.hv-on[data-perf="ultra"] .hero { height: auto; }
+html.hv-on .hero-pin, html.hv-on[data-perf="ultra"] .hero-pin { position: relative; height: auto; min-height: 100svh; }
+html.hv-on .hero-grid, html.hv-on[data-perf="ultra"] .hero-grid { height: auto; min-height: 100svh; }
+html.hv-on .hero .ch, html.hv-on[data-perf="ultra"] .hero .ch { grid-area: auto; opacity: 1; transform: none; margin-bottom: 14px; }
+html.hv-on .hero .ch:not(:first-child) { display: none; }
+html.hv-on .hero .chap-bar, html.hv-on .hero-hint, html.hv-on .hero .floor { display: none; }
